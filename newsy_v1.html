@@ -217,7 +217,7 @@ drawGraph()
 
 function getBubble(rival, choice){
 	d3.queue()
-	  .defer(d3.csv,"/data/allz.csv")
+	  .defer(d3.csv,"rivals_rollup.csv")
 	  .await(ready);
 
    function ready(error, datapoints){	
