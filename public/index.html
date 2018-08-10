@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="cloudy.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
+<script src="main.js"></script>
+<link type="text/css" rel="stylesheet" href='newsyv1.css'>
+
+<body>
+  <div id="wrapper">
+    <div id="leftcolumn">
+      <main>
+
+        <input id="tab1" type="radio" name="tabs" value="5" checked>
+        <label for="tab1">Acquisitions</label>
+
+        <input id="tab2" type="radio" name="tabs" value="4">
+        <label for="tab2">Investments</label>
+
+        <input id="tab3" type="radio" name="tabs" value="3">
+        <label for="tab3">Partnerships</label>
+
+        <input id="tab4" type="radio" name="tabs" value="2">
+        <label for="tab4">Look-Forwards</label>
+
+        <input id="tab5" type="radio" name="tabs" value="1" onclick="opendoc()">
+        <label for="tab5">Download Word</label>
+
+        <section id="content1" class="tabcontent">
+
+        </section>
+
+        <section id="content2" class="tabcontent">
+
+        </section>
+
+        <section id="content3" class="tabcontent">
+
+        </section>
+
+        <section id="content4" class="tabcontent">
+
+        </section>
+        <section id="content5" class="tabcontent">
+
+        </section>
+
+      </main>
+    </div>
+
+    <div id="rightcolumn">
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+
+  function drawGraph() {
+    var nodes = [
+      { id: "CBRE", group: 0, label: "CBRE", level: 1, "sized": 20 },
+      { id: "WeWork", group: 0, label: "WeWork", level: 2, "sized": 10 },
+      { id: "JLL", group: 0, label: "JLL", level: 2, "sized": 8 },
+      { id: "Commercial Real Estate", group: 0, label: "CRE", level: 2, "sized": 5 },
+      { id: "Cushman & Wakefield", group: 0, label: "C&W", level: 2, "sized": 3 },
+      { id: "Marcus & Millichap", group: 0, label: "M&M", level: 2, "sized": 5 },
+      { id: "HFF", group: 0, label: "HFF", level: 2, "sized": 2 },
+      { id: "Savills", group: 0, label: "Savills", level: 2, "sized": 4 },
+      { id: "Colliers", group: 0, label: "Colliers", level: 2, "sized": 3 },
+      { id: "Newmark Group", group: 0, label: "Newmark", level: 2, "sized": 2 },
+      { id: "Eastdil Secured", group: 0, label: "Eastdil", level: 2, "sized": 3 }
+    ]
+
+    var links = [
+      { target: "CBRE", source: "WeWork", strength: 0.13 },
+      { target: "CBRE", source: "JLL", strength: 0.21 },
+      { target: "CBRE", source: "Commercial Real Estate", strength: 1 },
+      { target: "CBRE", source: "Cushman & Wakefield", strength: 0.05 },
+      { target: "CBRE", source: "Marcus & Millichap", strength: 0.3 },
+      { target: "CBRE", source: "Savills", strength: 0.05 },
+      { target: "CBRE", source: "HFF", strength: 0.08 },
+      { target: "CBRE", source: "Colliers", strength: 0.08 },
+      { target: "CBRE", source: "Newmark Group", strength: 0.08 },
+      { target: "CBRE", source: "Eastdil Secured", strength: 0.08 }
+    ]
+
+    function isNeighborLink(node, link) {
+      return link.target.id === node.id || link.source.id === node.id
+    }
+
+    function getNodeColor(node, neighbors) {
+      if (Array.isArray(neighbors) && neighbors.indexOf(node.id) > -1) {
+        return node.level === 1 ? '#253529' : '#FFD12A'
+      }
+      return node.level === 1 ? '#C95A49' : '#ff9900'
+    }
+
+    function getLinkColor(node, link) {
+      return isNeighborLink(node, link) ? '#004d00' : '#ff9900'
+    }
+
+    function setOpacity(node, link) {
+      return isNeighborLink(node, link) ? 0.2 : 1
+    }
+
+    function getTextColor(node, neighbors) {
+      return Array.isArray(neighbors) && neighbors.indexOf(node.id) > -1 ? '#ffffcc' : 'black'
+    }
+
+    function getNeighbors(node) {
+      return links.reduce(function (neighbors, link) {
+        if (link.target.id === node.id) {
+          neighbors.push(link.source.id)
+        } else if (link.source.id === node.id) {
+          neighbors.push(link.target.id)
+        }
+        return neighbors
+      },
+        [node.id]
+      )
+    }
+
+    function selectNode(selectedNode) {
+      console.log(selectedNode);
+      localStorage.setItem('CompanyID', selectedNode.id);
+      localStorage.getItem('CompanyID');
+      var neighbors = getNeighbors(selectedNode)
+
+      nodeElements.attr('fill', function (node) { return getNodeColor(node, neighbors) })
+      textElements.attr('fill', function (node) { return getTextColor(node, neighbors) })
+      linkElements.attr('stroke', function (link) { return getLinkColor(selectedNode, link) })
+      var choice = selectedNode.label;
+
+      getBubble(choice, 5)
+    }
+
+
+
+    const w = document.getElementById("rightcolumn").offsetWidth
+    const h = window.innerHeight - 20
+
+    var svg1 = d3.select("#rightcolumn")
+      .append("svg")
+      .attr('width', w).attr('height', h)
+
+
+    // simulation setup with all forces
+
+    var linkForce = d3
+      .forceLink()
+      .id(function (link) { return link.id })
+      .strength(function (link) { return link.strength })
+      .distance(function (link) { return 150 })
+
+    var simulation = d3
+      .forceSimulation()
+      .force('link', linkForce)
+      .force('charge', d3.forceManyBody().strength(-200))
+      .force('center', d3.forceCenter().x(w / 2).y(h / 2))
+
+    var dragDrop = d3.drag().on('start', function (node) {
+      node.fx = node.x
+      node.fy = node.y
+    }).on('drag', function (node) {
+      simulation.alphaTarget(0.7).restart()
+      node.fx = d3.event.x
+      node.fy = d3.event.y
+    }).on('end', function (node) {
+      if (!d3.event.active) {
+        simulation.alphaTarget(0)
+      }
+      node.fx = null
+      node.fy = null
+    })
+
+
+    var linkElements = svg1.append("g")
+      .attr("class", "links")
+      .selectAll("line")
+      .data(links)
+      .enter().append("line")
+      .attr("stroke-width", 1)
+      .attr("stroke", "#99ccff")
+
+    var nodeElements = svg1.append("g")
+      .attr("class", "nodes")
+      .selectAll("circle")
+      .data(nodes)
+      .enter().append("circle")
+      .attr("r", function (d) {
+        return (2 * (d.sized));
+      })
+      .attr("fill", getNodeColor)
+      .call(dragDrop)
+      .on('click', selectNode)
+
+    var textElements = svg1.append("g")
+      .attr("class", "texts")
+      .selectAll("text")
+      .data(nodes)
+      .enter().append("text")
+      .text(function (node) { return node.label })
+      .attr("font-size", 38)
+      .attr("font-family", "Futura Bk Bt")
+      .attr("dx", -5)
+      .attr("dy", 42)
+
+    simulation.nodes(nodes).on('tick', () => {
+      nodeElements
+        .attr('cx', function (node) { return node.x })
+        .attr('cy', function (node) { return node.y })
+      textElements
+        .attr('x', function (node) { return node.x })
+        .attr('y', function (node) { return node.y })
+      linkElements
+        .attr('x1', function (link) { return link.source.x })
+        .attr('y1', function (link) { return link.source.y })
+        .attr('x2', function (link) { return link.target.x })
+        .attr('y2', function (link) { return link.target.y })
+    })
+
+    simulation.force("link").links(links)
+    simulation.alphaTarget(1.7).restart()
+  }
+  drawGraph()
+  function getBubble(rival, choice) {
+    d3.queue()
+      .defer(d3.csv, "rivals_rollup.csv")
+      .await(ready);
+
+    function ready(error, datapoints) {
+      var w = 500, h = 400;
+      var rival_data;
+      d3.selectAll("input[name='tabs']")
+        .on('change', function () {
+          var value = d3.select(this).attr('value');
+          var json_array = [];
+          var json_obj = [];
+
+          rival_data = datapoints.filter(function (d) {
+            if ((d["rival"] === rival.toLowerCase()) && (d['ranked'] == value)) { return d; }
+          });
+          d3.selectAll(".tabcontent").selectAll("*").remove();
+
+          rival_data.forEach(function (d) {
+            //d3.selectAll(".tabcontent").append('div').html(d.industry); 
+            //d3.selectAll(".tabcontent").append('div').html(d.counted); 
+            if (typeof d.Industry != undefined) {
+              json_array.push({ Industry: d.industry, Size: d.counted, Company: d.Company, Links: d.link });
+            }
+
+          });
+          if (json_array.length != 0) {
+            //json_obj = JSON.stringify(json_array);			
+            var dataset = { children: json_array };
+            drawBubble(dataset);
+          }
+          else {
+            d3.selectAll(".tabcontent").append('div').html('Nothing yet').style('text-align', 'center');
+          }
+        });
+    }
+  }
+
+  function drawBubble(dataset) {
+
+    var fillColor = d3.scaleOrdinal(d3.schemeCategory20c),
+      diameter = 600;
+
+
+    var bubble = d3.pack(dataset)
+      .size([diameter * 2, diameter])
+      //.value(function(d){return d.data.Size;})
+      .padding(0);
+
+
+    var svg = d3.selectAll(".tabcontent")
+      .append("svg")
+      .attr("width", '100%')
+      .attr("height", diameter);
+
+    var nodes = d3.hierarchy(dataset)
+      .sum(function (d) { console.log(d.Size); return d.Size; });
+
+    var node = svg.selectAll(".node")
+      .data(bubble(nodes).descendants())
+      .enter()
+      .filter(function (d) {
+        return !d.children
+      })
+      .append("g")
+      .attr("class", "node")
+      .attr("transform", function (d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      });
+
+    node.append("title")
+      .text(function (d) {
+        return d.data.Company;
+      });
+
+    node.append("circle")
+      .attr("r", function (d) {
+        return (d.data.Size * 40);
+      })
+      .style("fill", function (d) { console.log(fillColor(d.Size)); return fillColor(d.data.Size); })
+      .transition()
+      .duration(1000);
+    //.attr("cx", function(d) { return d.x-50; })
+    //.attr("cy", function(d) { return d.y-100; });
+    node.transition().duration(1000).attr("transform", function (d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    node.append("text")
+      .attr('font-size', 12)
+      .style('text-anchor', 'middle')
+      .style('fill', '#FEFEFE')
+      .text(function (d) {
+        return d.data.Industry + " : " + d.data.Size;
+      });
+  }
+  //default it to CB
+  getBubble('cbre', 5)
+</script>

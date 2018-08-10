@@ -1,7 +1,6 @@
 main {
   
   width: 100%;
-  height: 100%; 
   padding: 10px;
   margin: 0 auto;
   background: #00755E;
@@ -51,7 +50,8 @@ input:checked + label {
 }
 
 #tab1:checked ~ #content1, #tab2:checked ~ #content2,
-#tab3:checked ~ #content3, #tab4:checked ~ #content4 {
+#tab3:checked ~ #content3, #tab4:checked ~ #content4,
+#tab5:checked ~ #content5 {
   display: block;
   
 }
@@ -67,7 +67,7 @@ input:checked + label {
 }
 
 #leftcolumn {
-     width: 59%; height: 100%;     
+     width: 59%;
 	 float: left;	 
 	 background-color: white;
 	 
