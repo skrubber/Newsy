@@ -6,51 +6,45 @@
 <script src="https://d3js.org/d3-scale-chromatic.v0.3.min.js"></script>
 <script src="main.js"></script>
 <link type="text/css" rel="stylesheet" href='newsyv1.css'>
-
 <body>
-  <div id="wrapper">
-    <div id="leftcolumn">
-      <main>
+  <div  id="wrapper">
+<div>
+  <div id="leftcolumn">
+    <main>
+      <input id="tab1" type="radio" name="tabs" value="5" checked>
+      <label for="tab1">Acquisitions</label>
 
-        <input id="tab1" type="radio" name="tabs" value="5" checked>
-        <label for="tab1">Acquisitions</label>
+      <input id="tab2" type="radio" name="tabs" value="4">
+      <label for="tab2">Investments</label>
 
-        <input id="tab2" type="radio" name="tabs" value="4">
-        <label for="tab2">Investments</label>
+      <input id="tab3" type="radio" name="tabs" value="3">
+      <label for="tab3">Partnerships</label>
 
-        <input id="tab3" type="radio" name="tabs" value="3">
-        <label for="tab3">Partnerships</label>
+      <input id="tab4" type="radio" name="tabs" value="2">
+      <label for="tab4">Look-Forwards</label>
+      <img src="Microsoft_Word_2013_logo.svg" style="cursor: pointer;float: right;" width="100" height="60" onclick="opendoc()">
+      <section id="content1" class="tabcontent">
 
-        <input id="tab4" type="radio" name="tabs" value="2">
-        <label for="tab4">Look-Forwards</label>
+      </section>
 
-        <input id="tab5" type="radio" name="tabs" value="1" onclick="opendoc()">
-        <label for="tab5">Download Word</label>
+      <section id="content2" class="tabcontent">
 
-        <section id="content1" class="tabcontent">
+      </section>
 
-        </section>
+      <section id="content3" class="tabcontent">
 
-        <section id="content2" class="tabcontent">
+      </section>
 
-        </section>
+      <section id="content4" class="tabcontent">
 
-        <section id="content3" class="tabcontent">
+      </section>
 
-        </section>
+    </main>
+  </div>
 
-        <section id="content4" class="tabcontent">
-
-        </section>
-        <section id="content5" class="tabcontent">
-
-        </section>
-
-      </main>
-    </div>
-
-    <div id="rightcolumn">
-    </div>
+  <div id="rightcolumn">
+  </div>
+</div>
   </div>
 </body>
 
@@ -122,7 +116,6 @@
     }
 
     function selectNode(selectedNode) {
-      console.log(selectedNode);
       localStorage.setItem('CompanyID', selectedNode.id);
       localStorage.getItem('CompanyID');
       var neighbors = getNeighbors(selectedNode)
@@ -228,16 +221,37 @@
     d3.queue()
       .defer(d3.csv, "rivals_rollup.csv")
       .await(ready);
-
     function ready(error, datapoints) {
-      var w = 500, h = 400;
+      var w = 500, h = 800;
       var rival_data;
-      d3.selectAll("input[name='tabs']")
-        .on('change', function () {
+         var value = 5;
+          var json_array = [];
+          var json_obj = [];
+          rival_data = datapoints.filter(function (d) {
+            if ((d["rival"] === rival.toLowerCase()) && (d['ranked'] == value)) { return d; }
+          });
+          d3.selectAll(".tabcontent").selectAll("*").remove();
+
+          rival_data.forEach(function (d) {
+            //d3.selectAll(".tabcontent").append('div').html(d.industry); 
+            //d3.selectAll(".tabcontent").append('div').html(d.counted); 
+            if (typeof d.Industry != undefined) {
+              json_array.push({ Industry: d.industry, Size: d.counted, Company: d.Company, Links: d.link });
+            }
+
+          });
+          if (json_array.length != 0) {
+            //json_obj = JSON.stringify(json_array);			
+            var dataset = { children: json_array };
+            drawBubble(dataset);
+          }
+          else {
+            d3.selectAll(".tabcontent").append('div').html('Nothing yet').style('text-align', 'center');
+          }
+      d3.selectAll("input[name='tabs']").on('change', function () {
           var value = d3.select(this).attr('value');
           var json_array = [];
           var json_obj = [];
-
           rival_data = datapoints.filter(function (d) {
             if ((d["rival"] === rival.toLowerCase()) && (d['ranked'] == value)) { return d; }
           });
