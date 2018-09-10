@@ -4,7 +4,7 @@ main {
     padding: 10px;
     margin: 0 auto;
     background: #00755E;
-    border-radius: 10px;
+    border-radius: 15px;
     font-size: 30;
 }
 
@@ -100,5 +100,5 @@ input:checked+label {
 }
 @media screen and (min-width: 1610px) {
   main {
-height: 936px;
+height: 850px;
 }}

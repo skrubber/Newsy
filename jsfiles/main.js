@@ -1,5 +1,6 @@
 
 function opendoc() {
+  if(localStorage.getItem('CompanyID')){
     var Comp = localStorage.getItem('CompanyID');
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -8,6 +9,20 @@ function opendoc() {
     xhttp.open("GET", "/doc/" + Comp, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
+  }
+  else{
+    var Comp =  'WeWork';
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) { window.location.href = './../' + Comp + '.docx'; }
+    };
+    xhttp.open("GET", "/doc/" + Comp, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send();
+  }
+}
+function redirect(){
+  window.location.href =' http://172.16.10.53:8082/#!/landing' ; 
 }
 var obj1 = {
     "name": "name1",
