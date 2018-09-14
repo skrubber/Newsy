@@ -145,6 +145,6 @@ app.get('/doc/:id', (req, res) => {
     }
     res.send({ 'CompanyID': req.params.id });
 });
-app.listen(4000, () => {
+app.listen(8082, () => {
     console.log("port is listening");
 })
