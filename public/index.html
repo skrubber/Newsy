@@ -148,7 +148,7 @@
       .id(function (link) { return link.id })
       .strength(function (link) { return link.strength })
       .distance(function (link) { return 150 })
-
+     
     var simulation = d3
       .forceSimulation()
       .force('link', linkForce)
@@ -251,6 +251,7 @@
           else {
             d3.selectAll(".tabcontent").append('div').html('Nothing yet').style('text-align', 'center');
           }
+      
       d3.selectAll("input[name='tabs']").on('change', function () {
           var value = d3.select(this).attr('value');
           var json_array = [];
@@ -281,7 +282,6 @@
   }
 
   function drawBubble(dataset) {
-
     var fillColor = d3.scaleOrdinal(d3.schemeCategory20c),
       diameter = 600;
 
@@ -289,7 +289,7 @@
     var bubble = d3.pack(dataset)
       .size([diameter * 2, diameter])
       //.value(function(d){return d.data.Size;})
-      .padding(0);
+      .padding(3.5);
 
 
     var svg = d3.selectAll(".tabcontent")
@@ -319,7 +319,12 @@
 
     node.append("circle")
       .attr("r", function (d) {
-        return (d.data.Size * 40);
+        if(d.data.Size < 10){ 
+          return (d.data.Size * 40); }
+        else{
+          return (d.data.Size * 10);
+        }
+        
       })
       .style("fill", function (d) { console.log(fillColor(d.Size)); return fillColor(d.data.Size); })
       .transition()

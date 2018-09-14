@@ -11,7 +11,7 @@ function opendoc() {
     xhttp.send();
   }
   else{
-    var Comp =  'WeWork';
+    var Comp =  'Commercial Real Estate';
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) { window.location.href = './../' + Comp + '.docx'; }
@@ -22,7 +22,7 @@ function opendoc() {
   }
 }
 function redirect(){
-  window.location.href =' http://172.16.10.53:8082/#!/landing' ; 
+  window.location.href ='http://ninja.merilytics.com:80' ; 
 }
 var obj1 = {
     "name": "name1",
