@@ -22,7 +22,7 @@ function opendoc() {
   }
 }
 function redirect(){
-  window.location.href ='http://ninja.merilytics.com:80' ; 
+  window.location.href ='http://ninja.merilytics.com/#!/landing' ; 
 }
 var obj1 = {
     "name": "name1",
