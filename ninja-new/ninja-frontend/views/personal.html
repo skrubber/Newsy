@@ -1,0 +1,473 @@
+﻿<style>
+    .margin {
+        margin-top: 2%;
+        margin-left: 4.5%;
+        margin-bottom: 10px;
+    }
+
+    button,
+    .input-group {
+        margin-top: 5%;
+    }
+
+    a:hover {
+        color: #23527c;
+    }
+</style>
+<div>
+    <hr>
+    <div class="col-md-1">
+        <div>
+            <ul class="sidebar">
+
+                <li class="sidenavbar" ui-sref-active="active" ng-show="sidebarmenudata[0] == true">
+                    <img src="images/icons/icons/company-icon.svg" class="imge1" style="width: 15px;">
+                    <img src="images/icons/icons/company-icon-black.svg" class="color1" style="width: 15px;">
+                    </br>
+                    <a class="tab1" ui-sref="company">
+                        Company
+                    </a>
+
+                </li>
+                <li class="sidenavbar" ui-sref-active="active" ng-show="sidebarmenudata[1] == true">
+                    <img src="images/icons/icons/User-icon.svg" class="imge1" style="width: 15px;">
+                    <img src="images/icons/icons/User-icon-black.svg" class="color1" style="width: 15px;">
+                    </br>
+                    <a class="tab1" ui-sref="personal"> Individual</a>
+                </li>
+                <li class="sidenavbar" ui-sref-active="active" ng-show="sidebarmenudata[2] == true">
+                    <img src="images/icons/icons/industry-icon.svg" class="imge1" style="width: 15px;">
+                    <img src="images/icons/icons/industry-icon-black.svg" class="color1" style="width: 15px;">
+                    </br>
+                    <a ui-sref="industry" class="tab1"> Industry</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div ng-show="profileData==null">
+        <p style="text-align:center;">No Data</p>
+    </div>
+    <div class="col-md-10" ng-show="profileData!=null">
+
+        <div layout="row" class="personaldiv">
+            <div layout="column" flex="20">
+                <img src="{{profileData.PhotoUrl}}" class="shadow1" />
+            </div>
+            <div layout="column" flex="30" style="margin-left: 30px;
+                    padding-top: 0px !important;
+                    margin-top: 10px;">
+                <p>
+                    <b style="font-size: 21px !important;">{{profileData.Name}}</b>
+                </p>
+                <p>{{profileData.Designation}}</p>
+                <p>{{profileData.Company}}</p>
+
+            </div>
+            <div layout="row" flex="60" style="margin-top:30%; margin-left:24%;">
+                    <div>
+                            <img class="socialmedia" src="images/icons/icons/linkedin_icon.png" style="margin-top:10px;">
+                            
+                            <a class="social" href="{{profileData.LinkedInUrl}}" target="_blank" style="margin-top:10px;">LinkedIn</a>
+                        </div> 
+                <div >
+                    <img class="socialmedia" src="images/icons/icons/F_icon.svg" style="margin-top:10px;">
+                    <a class="social" href="{{profileData.FaceBookUrl}}" target="_blank" style="margin-top:10px;">Facebook</a>
+                </div>
+                
+                <div>
+                    <img class="socialmedia" src="images/icons/icons/black-180x180.png" style="margin-top:10px;">
+                    <a class="social" href="{{profileData.BloombergUrl}}" target="_blank" style="margin-top:10px;">Bloomberg</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10" style="margin-left: 5%;" ng-show="profileData!=null">
+        <md-content>
+            <md-tabs md-dynamic-height="" md-border-bottom="">
+                <md-tab style="color:#75b73e;" label="Basic Information">
+                    <md-content class="md-padding">
+                        <p>
+                            {{profileData.Overview}}
+                        </p>
+                        <div class="col-md-12" style="margin-top: 2%;" id="basicinfo">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>Name :</b>
+                                </div>
+                                <div>
+                                    <b>Designation :</b>
+                                </div>
+                                <div>
+                                    <b>Company :</b>
+                                </div>
+                                <div>
+                                    <b>Locations :</b>
+                                </div>
+                                <div>
+                                    <b>Age :</b>
+                                </div>
+                                <div>
+                                    <b>Gender :</b>
+                                </div>
+                                <div>
+                                    <b>Country :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div>
+                                    <p>{{profileData.Name}}</p>
+                                </div>
+                                <div>
+                                    <p>{{profileData.Designation}}</p>
+                                </div>
+                                <div>
+                                    <p>{{profileData.Company}}</p>
+                                </div>
+                                <div>
+                                    <p>{{profileData.Locations}}</p>
+                                </div>
+                                <div>
+                                    <p>{{profileData.Age}}</p>
+                                </div>
+                                <div>
+                                    <p>{{profileData.Gender}}</p>
+                                </div>
+                                <div>
+                                    <p>{{profileData.Country}}</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div layout="column" layout-padding flex="100" style="float:right;">
+                                <div layout="row" flex style="padding-bottom: 0px !important;">
+                                    <div layout="row" flex="20">
+                                        <b style="margin-left:10px;">Sources</b>
+                                    </div>
+                                    <div layout="row" flex="10">
+                                        <img src="images\icons\icons\Source-icon.svg" class="img2" style="margin-left: 37px;">
+                                    </div>
+                            
+                                </div>
+                                <div layout="row">
+                                    <div ng-repeat="sources in profileData['Basic_sources']" style="margin: 0 10px">
+                                        <div layout="row" ng-repeat="(key, value) in sources" layout-align="space-between center">
+                                            <a href="{{value}}" target="_blank">{{key}}</a>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                    </md-content>
+                </md-tab>
+                <md-tab style="color:#75b73e;" label="Experience & Education">
+                    <md-content class="md-padding">
+                        <div ng-show="profileData['Experience'] == undefined && profileData['Education'] == undefined">
+                                <p class="hidedata">No data Available</p>
+                        </div>
+                        <div ng-hide="profileData['Experience'] == undefined && profileData['Education'] == undefined">
+                        <div class="col-md-12">
+                            <h2 style="color:#75b73e; font-size:18px;">Experience</h2>
+                            <div ng-repeat="exp in profileData['Experience']">
+                                <div ng-repeat="(key, obj) in exp">
+
+                                    <div class="col-md-6">
+                                        <div>
+                                            <div>
+                                                <b>{{key}}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-6" style="margin-top:3px;">
+                                            <div ng-repeat="(item, value) in obj">
+
+                                                <p>{{value}}</p>
+
+                                            </div>
+                                        </div>
+                                  
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h2 style="color:#75b73e; font-size:18px;">Education</h2>
+                            <div ng-repeat="education in profileData['Education']">
+                                <div ng-repeat="(key, obj) in education">
+                                    <div class="col-md-6">
+                                        <div>
+                                            <b>{{key}}</b>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div ng-repeat="(key, value) in obj">
+                                            <p>{{value}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" layout-padding flex="100" style="float:right;">
+                                <div layout="row" flex style="padding-bottom: 0px !important;">
+                                    <div layout="row" flex="20">
+                                        <b style="margin-left:10px;">Sources</b>
+                                    </div>
+                                    <div layout="row" flex="10">
+                                        <img src="images\icons\icons\Source-icon.svg" class="img2">
+                                    </div>
+                            
+                                </div>
+                                <div layout="row">
+                                    <div ng-repeat="sources in profileData['Education_sources']" style="margin: 0 10px">
+                                        <div layout="row" ng-repeat="(key, value) in sources" layout-align="space-between center">
+                                            <a href="{{value}}" target="_blank">{{key}}</a>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                            </div>
+                    </md-content>
+                </md-tab>
+                <md-tab style="color:#75b73e;" label="Personal Information">
+                    <md-content class="md-padding">
+                        <div class="col-md-12" style="margin-top: 2%;" id="personalinfo">
+                            <div class="col-md-4">
+                                <div>
+                                    <b>Age :</b>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div>
+                                    <p>{{profileData.Age}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="col-md-4">
+                                <b>Phone Numbers :</b>
+                            </div>
+                            <div class="col-md-8">
+                                <div ng-repeat="phno in profileData['Contact details']['Phone Numbers']">
+                                    <p> {{phno}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="col-md-4">
+                                <b>Email :</b>
+                            </div>
+                            <div class="col-md-8">
+                                <div ng-repeat="email in profileData['Contact details']['Email Address']">
+                                    <p> {{email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="col-md-4">
+                                <b>People Associated/related :</b>
+                            </div>
+                            <div class="col-md-8">
+                                <div ng-repeat="people in profileData['People associated']">
+                                    <div ng-repeat="value in people">
+                                        <p>{{value}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+
+                            <div class="col-md-4">
+                                <b> Life Events :</b>
+                            </div>
+                            <div class="col-md-8">
+                                <div ng-repeat="(key, value) in profileData['LifeEvents']">
+                                    <div ng-repeat="lifevents in value">
+                                        <p>{{lifevents}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column" layout-padding flex="100" style="float:right;">
+                                <div layout="row" flex style="padding-bottom: 0px !important;">
+                                    <div layout="row" flex="20">
+                                        <b style="margin-left:10px;">Sources</b>
+                                    </div>
+                                    <div layout="row" flex="10">
+                                        <img src="images\icons\icons\Source-icon.svg" class="img2" style="margin-left: 39px;">
+                                    </div>
+                            
+                                </div>
+                                <div layout="row">
+                                    <div ng-repeat="sources in profileData['Personal_sources']" style="margin: 0 10px">
+                                        <div layout="row" ng-repeat="(key, value) in sources" layout-align="space-between center">
+                                            <a href="{{value}}" target="_blank">{{key}}</a>
+                                        </div>
+                                    </div>
+                            
+                                </div>
+                            </div>
+                    </md-content>
+                </md-tab>
+                <md-tab style="color:#75b73e;" label="Interests">
+                    <md-content class="md-padding">
+                        <div class="col-md-12" style="margin-top: 2%;">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>Checks-ins :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div ng-repeat="checkins in profileData['Interests']['Check-ins']">
+                                    <p> {{checkins}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 2%;">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>TV Programmes :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div ng-repeat="programs in profileData['Interests']['TV Programmes']">
+                                    <p> {{programs}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 2%;">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>Music :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div ng-repeat="music in profileData['Interests']['Music']">
+                                    <p> {{music}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 2%;">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>Likes :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div ng-repeat="likes in profileData['Interests']['Likes']">
+                                    <p> {{likes}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 2%;">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>Reviews :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div ng-repeat="review in profileData['Interests']['Reviews']">
+                                    <p> {{review}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="margin-top: 2%;">
+                            <div class="col-md-3">
+                                <div>
+                                    <b>Groups :</b>
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div ng-repeat="group in profileData['Interests']['Groups']">
+                                    <div ng-repeat="(key, obj) in group">
+                                        <div ng-show="key=='Name'">{{key}}:{{obj}}</div>
+                                        <span ng-hide="key=='Name'">{{key}}: {{obj | limitTo:80}}</span>
+                                            <div>
+                                                <a ng-hide="key=='Name'" class="dialogbox" ng-click="showAlert(obj)">See More</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="column" layout-padding flex="100" style="float:right;">
+                                    <div layout="row" flex style="padding-bottom: 0px !important;">
+                                        <div layout="row" flex="20">
+                                            <b style="margin-left:10px;">Sources</b>
+                                        </div>
+                                        <div layout="row" flex="10">
+                                            <img src="images\icons\icons\Source-icon.svg" class="img2">
+                                        </div>
+                                
+                                    </div>
+                                    <div layout="row">
+                                        <div ng-repeat="sources in profileData['Interests_sources']" style="margin: 0 10px">
+                                            <div layout="row" ng-repeat="(key, value) in sources" layout-align="space-between center">
+                                                <a href="{{value}}" target="_blank">{{key}}</a>
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                                </div>
+                    </md-content>
+                </md-tab>
+                <md-tab label="News Mentions">
+                    <md-content class="md-padding">
+                        <div  ng-show="profileData['News Mentions'] == null || profileData['News Mentions'] == undefined || profileData['News Mentions'] == ''">
+                                <p class="hidedata">No data Available</p>
+                        </div>
+                        <div  ng-hide="profileData['News Mentions'] == null || profileData['News Mentions'] == undefined || profileData['News Mentions'] == ''">
+                        <div class="cardfornews" ng-repeat="news in profileData['News Mentions']">
+                            <div ng-repeat="(key, obj) in news">
+                                <div>
+                                    <p class="cardinfo" ng-show="key =='Title'" style="padding-top: 10px">
+                                        <b>{{obj}}</b>
+                                    </p>
+                                    <p class="info" ng-show="key == 'description'">{{obj | limitTo:200 }}</p>
+                                </div>
+                                <div>
+                                    <a class="info" target="_blank" ng-show="key=='url'" href="{{obj}}">
+                                        Read More
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+        </div>
+
+    </div>
+<!--    
+<div layout="column" layout-padding flex="100" style="float:right;">
+        <div layout="row" flex style="padding-bottom: 0px !important;">
+            <div layout="row" flex="10">
+                <b>Sources</b>
+            </div>
+            <div layout="row" flex="10">
+                <img src="images\icons\icons\Source-icon.svg" class="img2">
+            </div>
+    
+        </div>
+        <div layout="row" ng-repeat="sources in companydetails['Overview_Sources']" >
+            <div layout="row" flex="20" ng-repeat="(key, value) in sources" layout-align="space-between center">
+                <div layout="column" flex="10">
+                    <a href="{{sources.value}}">{{key}}</a>
+                </div>
+            </div>
+    
+        </div>
+    </div> -->

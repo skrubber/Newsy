@@ -1,0 +1,404 @@
+﻿<style>
+    .applybackground {
+        background-color: #75b73e;
+        color: white;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        height: 45px;
+        padding: 10px;
+        max-height: none !important;
+    }
+
+    md-dialog md-dialog-actions .md-button {
+        background-color: #75b73e!important;
+    }
+
+    .md-title {
+        color: #75b73e;
+        font-size: 21px;
+        font-weight: bold;
+    }
+</style>
+<div style="border-bottom:1px solid #ddd;" layout="row" layout-align="space-between center">
+        <div layout="row" layout-align="space-between center">
+            <div>
+                <img src="{{profileData.PhotoUrl}}" class="shadow1" ng-if="profileData.PhotoUrl">
+                <img src="https://career.utk.edu/wp-content/uploads/sites/56/2017/06/image_preview.jpg" class="shadow1" alt="No image" ng-if="!profileData.PhotoUrl">
+            </div>
+            <div layout="column" style="padding-left:5px;">
+                <div style="padding-top: 11px;" ng-if="profileData.Name">
+                    <b style="color:#3f3f3f">{{profileData.Name}}</b>
+                </div>
+                <div style="color:#818181;font-size:14px;" ng-if="profileData.Designation">{{profileData.Designation}}</div>
+                <div style="color:#818181;font-size:14px;" ng-if="profileData.Company">{{profileData.Company}}</div>
+            </div>
+        </div>
+        <div layout-gt-md="row" layout-md="column">
+            <div flex layout="row" layout-align="end end">
+                <div>
+                    <a ng-hide="profileData.FaceBookUrl == null" class="social" title="Facebook" target="_blank" href="{{profileData.FaceBookUrl}}">
+                        <img ng-if="profileData.FaceBookUrl" class="socialmedia" src="images/icons/icons/F_icon.svg">
+                    </a>
+                    <!-- <a ng-show="profileData.FaceBookUrl == null" class="social" ng-disabled="true" ng-style="{ 'cursor' : ('Facebook')  ? 'not-allowed' : 'pointer' }">Facebook</a> -->
+                </div>
+
+                <div>
+
+                    <a ng-hide="profileData.LinkedInUrl == null" class="social" title="LinkedIn" target="_blank" href="{{profileData.LinkedInUrl}}">
+                        <img ng-if="profileData.LinkedInUrl" class="socialmedia" src="images/icons/icons/linkedin_icon.png">
+                    </a>
+                    <!-- <a ng-show="profileData.LinkedInUrl == null" class="social" ng-disabled="true" ng-style="{ 'cursor' : ('LinkedIn')  ? 'not-allowed' : 'pointer' }">LinkedIn</a> -->
+                </div>
+
+                <div>
+
+                    <a ng-hide="profileData.BloomBergUrl == null" title="BloomBerg" class="social" target="_blank" href="{{profileData.BloomBergUrl}}">
+                        <img ng-if="profileData.BloomBergUrl" class="socialmedia" src="images/icons/icons/black-180x180.png">
+                    </a>
+                    <!-- <a ng-show="profileData.BloomBergUrl == null" class="social" ng-disabled="true" ng-style="{ 'cursor' : ('Bloomberg')  ? 'not-allowed' : 'pointer' }">Bloomberg</a> -->
+                </div>
+
+                <div flex layout="column" ng-click="baseToDocx()" layout-align="center center" style="cursor: pointer;margin-right:5px;" ng-if="profileData">
+                    <div class="btndownload">
+                        <img width="25"  style="padding-bottom:3px;" src="images/icons/icons/Microsoft_Word_2013_logo.svg"> Download</div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+        <div layout="column" flex ng-hide="LoadingShow == true">
+    <md-content flex layout="row" style="padding: 0 5px; border-bottom: 1px solid #ddd" ng-if="profileData">
+        <md-tabs flex md-border-bottom style="width:100%;">
+            <md-tab flex ng-click="sources(profileData['Basic_sources'])">
+                <md-tab-label>
+                    Basic Information
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="column" style="padding: 10px" flex>
+                        <div layout="row">
+                            <p style="text-align:justify">{{profileData.Overview}}</p>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Name</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{profileData.Name}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Designation</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{profileData.Designation}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Company</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{profileData.Company}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Locations</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{profileData.Locations}}</p>
+                            </div>
+                        </div>
+                        <!-- <div layout="row" class="info-row">
+                            <div>
+                                <b>Age</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{profileData.Age}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Gender</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{profileData.Gender}}</p>
+                            </div>
+                        </div> -->
+                        <!-- <div layout="row" class="info-row">
+                                    <div>
+                                        <b>Country</b>
+                                    </div>
+                                    <div>
+                                        <p>: &nbsp;{{profileData.Country}}</p>
+                                    </div>
+                                </div> -->
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab flex ng-click="sources(profileData['Education_sources'])" ng-disabled="profileData['Experience'] == 'NA' && profileData['Education'] == 'NA'">
+                <md-tab-label>Experience & Education
+                    <md-tooltip md-direction="top" ng-if="profileData['Experience'] == 'NA' && profileData['Education'] == 'NA'">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="column" style="padding: 10px" flex>
+                        <div layout="row" flex layout-align="center center" ng-show="profileData['Experience'] == 'NA' && profileData['Education'] == 'NA'">
+                            <div>No data available</div>
+                        </div>
+                        <div ng-hide="profileData['Experience'] == 'NA' && profileData['Education'][0] == 'NA'">
+                            <div ng-hide="profileData['Experience'] == 'NA'">
+                                <b style="color:#75b73e">Experience :</b>
+                                <div layout="row" flex ng-repeat="exp in profileData['Experience']">
+                                    <div layout="row" flex ng-repeat="(key, obj) in exp" style="margin-top: 10px;">
+                                        <div class="info-row1">
+                                            <b>{{key}} </b>
+                                        </div>
+                                        <div style="margin-right: 6px;">&nbsp; :</div>
+                                        <div>
+                                            <div ng-repeat="(item, value) in obj">
+                                                <div>{{value}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div ng-hide="profileData['Education'] == 'NA'">
+                                <b style="color:#75b73e">Education :</b>
+                                <div layout="row" flex ng-repeat="education in profileData['Education']">
+                                    <div layout="row" flex ng-repeat="(key, obj) in education" style="margin-top: 10px;">
+                                        <div class="info-row1">
+                                            <b>{{key}} </b>
+                                        </div>
+                                        <div style="margin-right: 6px;">&nbsp; :</div>
+                                        <div>
+                                            <div ng-repeat="(key, value) in obj">
+                                                <div>{{value}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab label="Personal Information" flex ng-click="sources(profileData['Personal_sources'])" ng-disabled="true">
+                <md-content flex style="height: 100%;">
+                    <div layout="column" flex style="padding: 10px">
+
+                        <div layout="row">
+                            <div class="info-row1">
+                                <b>Age </b>
+                            </div>
+                            <div>
+                                <p>:&nbsp;{{profileData.Age}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" style="margin-bottom: 10px;">
+                            <div class="info-row1">
+                                <b>Phone Numbers </b>
+                            </div>
+                            <div>:&nbsp;</div>
+                            <div>
+                                <div layout="column" layout-align="center center" ng-show="profileData['Contact details']['Phone Numbers'] == null || profileData['Contact details']['Phone Numbers'] == undefined || profileData['Contact details']['Phone Numbers'] == ''">
+                                    <div>NA</div>
+                                </div>
+                                <div layout="row" ng-repeat="phno in profileData['Contact details']['Phone Numbers']">
+
+                                    <div>{{phno}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="row" style="margin-bottom: 10px;">
+                            <div class="info-row1">
+                                <b>Email Address </b>
+                            </div>
+                            <div>:&nbsp;</div>
+                            <div>
+                                <div layout="column" layout-align="center center" ng-show="profileData['Contact details']['Email Address'] == null || profileData['Contact details']['Email Address'] == undefined || profileData['Contact details']['Email Address'] == ''">
+                                    <div>NA</div>
+                                </div>
+                                <div layout="row" ng-repeat="email in profileData['Contact details']['Email Address']">
+                                    <div>{{email}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="row" style="margin-bottom: 10px;">
+                            <div class="info-row1">
+                                <b>People Associated/related </b>
+                            </div>
+                            <div>:&nbsp;</div>
+                            <div>
+                                <div layout="column" layout-align="center center" ng-show="profileData['People associated'] == null || profileData['People associated'] == undefined || profileData['People associated'] == ''">
+                                    <div>NA</div>
+                                </div>
+                                <div ng-repeat="people in profileData['People associated']">
+                                    <div layout="row" ng-repeat="value in people">
+                                        <div>{{value}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="row" style="margin-bottom: 10px;">
+                            <div class="info-row1">
+                                <b> Life Events </b>
+                            </div>
+                            <div>:&nbsp;</div>
+                            <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['LifeEvents'] == 'NA' || profileData['LifeEvents'] == undefined">
+                                            <div>NA</div>
+                                        </div>
+                                <div ng-repeat="(key, value) in profileData['LifeEvents']" ng-hide="profileData['LifeEvents'] == 'NA' ">
+        
+                                    <div layout="row" ng-repeat="lifevents in value">
+                                        <div>{{lifevents}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-content>
+            </md-tab>
+            <md-tab flex ng-click="sources(profileData['Interests_sources'])" ng-disabled="profileData['Interests'] == ''|| profileData['Interests'] == undefined || profileData['Interests'] ==null || profileData['Interests'] == 'NA' || profileData['Interests'] == NA">
+                <md-tab-label>Interests
+                    <md-tooltip md-direction="top" ng-if="profileData['Interests'] == ''|| profileData['Interests'] == undefined">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="column" style="padding: 10px" flex>
+                        <div layout="row" flex layout-align="center center" ng-show="profileData['Interests'] == ''|| profileData['Interests'] == undefined">
+                            <div>No data available</div>
+                        </div>
+                        <div ng-hide="profileData['Interests'] == '' || profileData['Interests'] == undefined">
+                            <div layout="row" style="margin-bottom: 10px;">
+                                <div class="info-row1">
+                                    <b>Check-Ins </b>
+                                </div>
+                                <div>:&nbsp;</div>
+                                <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['Interests']['Check-ins'] == null || profileData['Interests']['Check-ins'] == undefined || profileData['Interests']['Check-ins'] == ''">
+                                        <div>NA</div>
+                                    </div>
+                                    <div layout="row" ng-repeat="checkins in profileData['Interests']['Check-ins']">
+                                        <div>{{checkins}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="row" style="margin-bottom: 10px;">
+                                <div class="info-row1">
+                                    <b>TV Programmes </b>
+                                </div>
+                                <div>:&nbsp;</div>
+                                <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['Interests']['TV Programmes'] == null || profileData['Interests']['TV Programmes'] == undefined || profileData['Interests']['TV Programmes'] == ''">
+                                        <div>NA</div>
+                                    </div>
+                                    <div layout="row" ng-repeat="programs in profileData['Interests']['TV Programmes']">
+                                        <div>{{programs}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="row" style="margin-bottom: 10px;">
+                                <div class="info-row1">
+                                    <b>Music </b>
+                                </div>
+                                <div>:&nbsp;</div>
+                                <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['Interests']['Music'] == null || profileData['Interests']['Music'] == undefined || profileData['Interests']['Music'] == ''">
+                                        <div>NA</div>
+                                    </div>
+                                    <div layout="row" ng-repeat="music in profileData['Interests']['Music']">
+                                        <div>{{music}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="row" style="margin-bottom: 10px;">
+                                <div class="info-row1">
+                                    <b>Likes</b>
+                                </div>
+                                <div>:&nbsp;</div>
+                                <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['Interests']['Likes'] == null || profileData['Interests']['Likes'] == undefined || profileData['Interests']['Likes'] == ''">
+                                        <div>NA</div>
+                                    </div>
+                                    <div layout="row" ng-repeat="likes in profileData['Interests']['Likes']">
+                                        <div>{{likes}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="row" style="margin-bottom: 10px;">
+                                <div class="info-row1">
+                                    <b>Reviews </b>
+                                </div>
+                                <div>:&nbsp;</div>
+                                <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['Interests']['Reviews'] == null || profileData['Interests']['Reviews'] == undefined || profileData['Interests']['Reviews'] == ''">
+                                        <div>NA</div>
+                                    </div>
+                                    <div layout="row" ng-repeat="review in profileData['Interests']['Reviews']">
+                                        <div>{{review}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div layout="row" style="margin-bottom: 10px;">
+                                <div class="info-row1">
+                                    <b>Groups </b>
+                                </div>
+                                <div>:&nbsp;</div>
+                                <div>
+                                    <div layout="column" layout-align="center center" ng-show="profileData['Interests']['Groups'] == null || profileData['Interests']['Groups'] == undefined || profileData['Interests']['Groups'] == ''">
+                                        <div>NA</div>
+                                    </div>
+                                    <div ng-repeat="group in profileData['Interests']['Groups']">
+                                        <div ng-repeat="(key, obj) in group">
+                                            <div ng-show="key == 'Name'">{{key}}:{{obj}}</div>
+                                            <span ng-hide="key=='Name'">{{key}}: {{obj | limitTo:80}}</span>
+                                            <div>
+                                                <a ng-hide="key=='Name'" class="dialogbox" ng-click="showAlert(obj)">&nbsp;See More</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab flex ng-click="sources(profileData['news_sources'])" ng-disabled="profileData['News Mentions'] == 'NA' || profileData['News Mentions'] == undefined || profileData['News Mentions'] == ''">
+                <md-tab-label>News Mention
+                    <md-tooltip md-direction="top" ng-if="profileData['News Mentions'] == 'NA' || profileData['News Mentions'] == undefined || profileData['News Mentions'] == ''">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="column" style="padding: 10px" flex>
+                        <div layout="row" flex layout-align="center center" ng-show="profileData['News Mentions'] == 'NA' || profileData['News Mentions'] == undefined || profileData['News Mentions'] == ''">
+                            <p>No data available</p>
+                        </div>
+                        <div>
+                            <div class="cardfornews" style="height:100px;" ng-repeat="news in profileData['News Mentions']" ng-hide="profileData['News Mentions'] == 'NA'|| profileData['News Mentions'] == undefined || profileData['News Mentions'] == ''">
+                                <div class="cardinfo" layout="row" layout-align="space-between center">
+                                    <div title="{{values.title}}">
+                                        <b>{{news.Title}}</b>
+                                    </div>
+
+                                </div>
+                                <p style="margin-left: 20px;padding-top: 2px;" title="{{values.description}}...">{{news.description | limitTo:200}}
+                                    <a target="_blank" ng-hide="news.url == null" style="font-size:12px;" href="{{news.url}}">read more </a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+
+</div>

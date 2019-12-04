@@ -1,0 +1,117 @@
+<style>
+        .applybackgroundtoggle {
+            padding: 6px;
+            color: black;
+        }
+        .input-group-addon {
+      border-radius: 0px !important;
+    }
+    .btnhover :hover{
+        background-color: white;
+        color: black;
+    }
+    </style>
+    <div flex layout="column" ng-controller="inputController" class="firsttab">
+    <div>
+            <div class="logostyle">
+                    <div layout="row" flex layout-align="center center">
+                        <img src="images/icons/icons/Ninja-logo.svg" width="200">
+                        <sup style="color: #da6e7e;">Beta</sup>
+                    </div>
+                    <div flex class="punchline">A platform for quick background research on companies, individuals and industries</div>
+                </div>
+                <div flex layout="column">
+                        <div layout="column" flex layout-align="start center" class="margintop">
+                            <div layout="row" layout-align="space-between center" class="loginheader" ng-show="openform == false">
+                                <div layout="row" layout-align="center center">
+                                    <div class="logheader" ng-class="(Companytoggle == true) ? 'applybackgroundtoggle' : 'dontapply'"
+                                       >Log into your account</div>
+                                </div>
+                            </div>
+                            <div layout="column">
+                                <div layout="column" flex class="formbox" ng-show="Companytoggle == true">
+                                <form name="form" novalidate>
+                                    <div class="borderforchrome">
+                                     <div class="innerheader">
+                                        <div class="input-group" flex>
+                                            <span class="input-group-addon" style="border-top-left-radius: 9px !important;border-bottom-left-radius: 9px !important;">
+                                                <img src="images/icons/icons/mail.svg" style="width: 15px;">
+                                            </span>
+                                            <input style="border:1px solid#ddd !important; height: 40px; border-top-right-radius: 9px !important;border-bottom-right-radius: 9px !important;" type="email" ng-model="user.email" title="Enter Individual Name" class="form-control"
+                                                name="email" placeholder="Email *" required>                            
+                                        </div>
+                                        <span ng-messages="form.email.$error" ng-if="form.email.$touched">
+                                            <span style="color:red;" ng-message="required">This is required!</span>
+                                            <span style="color:red;" ng-message="email">Please enter a valid email address!</span>
+                                        </span>
+                                     </div>
+                                        <div style="margin: 10px;padding:10px;">
+                                            <div class="input-group" flex>
+                                                <span class="input-group-addon" style="border-top-left-radius: 9px !important;border-bottom-left-radius: 9px !important;">
+                                                    <img src="images/icons/icons/password.svg" style="width: 15px;">
+                                                </span>
+                                                <input style="border:1px solid#ddd !important; height: 40px; border-top-right-radius: 9px !important;border-bottom-right-radius: 9px !important;" type="password" title="Enter Password" class="form-control"
+                                                    name="password" ng-model="user.pwd" placeholder="Password *" required>
+                                                  
+                                            </div>
+                                            <div ng-messages="form.password.$error" ng-if="form.password.$touched">
+                                                <div style="color:red" ng-message="required">This is required!</div>
+                                              </div>
+                                        </div>
+                                        <div layout="row" layout-align="center center" class="btnhover">
+                                              <button ng-click="form.$valid && loginform(user)" class="submitbtn">
+                                               <p class="submitbtntxt">Login</p>
+                                              </button>
+                                            </div>
+                                            <div style="height: 50px;padding: 16px;text-align:center">
+                                                   <a target="_blank" ng-click="openpwdform()" style="color:black;cursor: pointer;">Forgot Password?</a>
+                                                </div>
+                                    </div>
+                                </form>
+                                </div>
+                            <div layout="column" flex style="width:400px;border:1px solid#ddd" ng-show="openform == true">
+                                    <form name="pwdform" class="borderforchrome">
+                                            <div class="pwdheading">
+                                                  Forgot Password
+                                                  </div>
+                                            <div style="height: 80px;padding: 15px;">
+                                               <span ng-click="hidepwdform()"> <i class="material-icons" style="cursor: pointer;">arrow_back</i></span>
+                                             <span style="text-align:center;"> No worries. We'll send a link to your email address o reset your password</span>
+                                            </div>
+                                           
+                                            <div class="input-group" style="margin: 10px;padding:10px;" flex>
+                                                <span class="input-group-addon" style="border: none">
+                                                    <img src="images/icons/icons/mail.svg" style="width: 15px;">
+                                                </span>
+                                                <input style="border:1px solid#ddd !important; height: 40px" type="text" title="Enter Individual Name" class="form-control"
+                                                    name="email" ng-model="pwd.email" placeholder="Email *" >
+                                                    <div ng-messages="pwdform.email.$error">
+                                                            <div ng-message="required">This is required!</div>
+                                                          </div>
+                                            </div>
+                                            <div layout="row" layout-align="center center" style="margin-bottom:10px;">
+                                                  <div ng-click="" style="background-color:#75b73e; border:1px solid #ddd;height: 41px;width: 90%;">
+                                                   <p style="text-align:center;color:white;padding-top: 5px;font-size: 18px;">Submit</p>
+                                                  </div>
+                                                </div>
+                                                
+                                       
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+          
+    </div>
+        </div>
+        <div style="height: 60px; min-height: 60px; max-height: 60px; background-color: #e4e4e4" layout="row" layout-align="start center">
+                <div flex layout="row" style="padding: 10px">
+                    <div flex layout="row" layout-align="end center">
+                        <div>Powered by &nbsp;</div>
+                        <a target="_blank" href="https://merilytics.com/">
+                            <img alt="Merilytics" src="../../images/logo.png" width="120">
+                        </a>
+                    </div>
+                </div>
+            </div>

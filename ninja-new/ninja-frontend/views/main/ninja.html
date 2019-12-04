@@ -1,0 +1,89 @@
+
+<style>
+    
+    button {
+        color:#000 !important;
+        text-transform: capitalize !important
+    }
+    button:hover{
+background-color: #75b73e !important;
+color: white!important;
+    }
+</style>
+<div layout="column" flex ng-controller="ninja_controller as ctrl">
+    <div ng-if="flag == 1" flex layout="row" layout-align="center center">
+        <p style="font-size:17px !important">Fetching details...</p>
+    </div>
+    <div style="border-bottom:1px solid #ddd;height: 50px;" layout="row"  layout-align="space-between center">
+                    <div layout="row">
+                            <img src="images/icons/icons/Ninja-logo.svg" style="text-align: center" width="70" height="70" ng-click="reload()" class="companylogo">
+                            <sup style="color: #da6e7e;margin-top: 20px;top:0px!important">Beta</sup>
+                        </div>
+                        <div layout="row">
+                                <h2 style="color:#75b73e">{{modulename}}</h2>
+                            </div>
+                            <md-menu-bar>
+                                    <span> Hi, {{username}}  </span>
+                                    <md-menu>
+                                            <div  layout="row"  style="cursor: pointer;background-color:#75b73e;color:white;padding: 10px;margin:5px;border-radius: 50%;">
+                                                 <md-icon ng-click="$mdMenu.open()" class="material-icons" style="color:white;">account_circle</md-icon>
+                                                </div>
+                                      <md-menu-content style="padding: 10px;width: 250px;">
+
+                                            <md-menu-item type="checkbox" ng-model="settings.allowChanges">Hi, ABC</md-menu-item>
+                                            <md-menu-divider></md-menu-divider>
+                                            <md-menu-item type="radio" ng-click="ctrl.showAdvanced($event)" style="cursor: pointer;">Log Out</md-menu-item>
+                                      </md-menu-content>
+                                    </md-menu>
+                                   </md-menu-bar>
+                        </div>
+    <div flex layout="row">
+        <div flex style="width: 50px; background-color: #75b73e;max-width: 50px; height: 100%!important;">
+            <div ng-repeat="men in ctrl.menu" class="menuTile" ng-click="ctrl.menuChange(men.url)" ng-class="{'selctedMenu': (selectedMenu == men.url)}"
+                ng-mouseenter="ctrl.menuIndex[$index] = true" ng-mouseleave="ctrl.menuIndex[$index] = false" ng-if="men.visible == true">
+                <div style="height: 50px" layout="row" layout-align="center center">
+                    <img src="{{!ctrl.menuIndex[$index] && !(selectedMenu == men.url) ? men.img : men.img1}}" ng-click="ctrl.reload()" title="{{men.name}}">
+                </div>
+                <!-- <div class="name" style="font-size:14px;">{{men.name}}</div> -->
+            </div>
+        </div>
+        <div flex layout="column">
+            <div ui-view flex layout="column"></div>
+            <div flex layout="column" layout-align="start start" style="height: 25px !important; max-height: 25px !important" ng-show="sources.length !== 0"
+                ng-if="hidesource == true || LoadingShow == true">
+                <div layout="row" layout-align="center end" style="margin-right: 20px;">
+                    <div layout="row">
+                        <div layout="row">
+                            <span style="font-size: 16px !important;padding-left:10px;">Sources</span>
+                            <span>
+                                <img src="images\icons\icons\Source-icon.svg" width="10" style="padding-bottom: 10px;">
+                            </span>
+                        </div>
+                        <div layout="row">
+                            <div layout="row" ng-repeat="value in sources" style="padding-left:10px;">
+                                <a href="{{value.url}}" target="_blank" style="font-size: 14px;
+                                        padding-top: 3px;">{{value.name}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="dialog1.tmpl.html">
+    <md-dialog flex="20" >
+            <md-dialog-content>
+                <div style="padding: 20px; text-align: center">Are you sure you want to log out?</div>
+            </md-dialog-content>
+        
+            <md-dialog-actions layout="row">
+                <md-button  ng-click="logout()">
+                   Yes
+                </md-button>
+                <md-button ng-click="cancel()">
+                    No
+                </md-button>
+            </md-dialog-actions>
+        </md-dialog>
+      </script>

@@ -1,0 +1,79 @@
+﻿<style>
+    .applybackground {
+        background-color: white;
+        color: #5c5c5c;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        height: 60px !important;
+        max-height: none !important;
+    }
+    @media screen and (min-width: px) {
+        .mainscreen{
+            max-height:620px;overflow-y: auto;border: 1px solid #ddd; min-height:620px;}
+}
+</style>
+    <div style="height: 30px !important" layout="row" layout-align="center center" ng-hide="rootPersonalDetails.length  == 0">
+            <b>{{messageforindividual}}</b>
+    </div>
+<div layout="column" flex>
+    <div flex ng-show="rootPersonalDetails.length  == 0" layout="row" layout-align="center center">
+        <p>Session time out. Refresh the page and search</p>
+    </div>
+    <div layout="row" flex layout-align="center center" ng-show="menuData.length == 0">
+        <p>No data available</p>
+    </div>
+    <div layout="row" ng-hide="menuData == null || menuData.length == 0" layout-align="space-between center" flex style="background-color: rgb(230, 230, 230); height: 46px;min-height: 46px;max-height: 46px;">
+        <div layout="row">
+            <div layout="row" ng-class="{'tab': menuSelectedValue === menu}" ng-repeat="menu in menuData" class="mainmenu">
+                <div style="cursor: pointer" layout="row" layout-align="start center" ng-click="tabClicked(menu);">
+                    <img ng-hide="menu == 'FindPeoplesearch'" src="{{images[menu]}}" style="width:25px; margin-right:10px;">
+                    <span>{{menu}}&nbsp;<center class="badge">{{rootPersonalDetails[menu][0] == 'No profiles found' ? 0: rootPersonalDetails[menu].length}}</center></span>
+                </div>
+            </div>
+        </div>
+        <div layout="row" layout-align="center center" style="margin-right: 10px">
+            <button type="submit" class="btn btn-default btn-success" ng-click="proceed()" style="background-color:#006a4d !important;width: 80px;color: white !important;">Next</button>
+        </div>
+
+    </div>
+    <div ng-repeat="menu in menuData" ng-if="menu === menuSelectedValue" style=" height: 76% !important; min-height: 76%;margin-left: 10px;overflow-y:scroll;">
+        <div ng-show="rootPersonalDetails[menu][0] == 'No profiles found'">
+            <p class="nodata" style="text-align:center;">No Profiles Found</p>
+        </div>
+        <div flex layout="row" class="card" ng-click="selectedprofiledata[menu] = (selectedprofiledata[menu] == $index ? null : $index); menuChange(index);" style="height:200px;" ng-show="rootPersonalDetails[menu][0] != 'No profiles found'" ng-if="flag == 0" ng-repeat="details in rootPersonalDetails[menuSelectedValue]">
+            <div flex layout="row">
+                <div flex="20" layout="column">
+                    <img ng-src="{{details.photourl}}" class="shadow3" alt="No image" ng-if="details.photourl" ng-hide="data == 'No profiles found'"
+                        style="margin:20px;">
+                    <img src="https://career.utk.edu/wp-content/uploads/sites/56/2017/06/image_preview.jpg" class="shadow3" alt="No image" ng-if="!details.photourl"
+                        style="margin:20px;">
+                </div>
+                <div flex="60" layout="column" >
+                    <h2>
+                        <b>
+                            <a target="_blank" href="{{details.profileurl}}"> {{details.profilename}}</a>
+                        </b>
+                    </h2>
+                    <p style="color:grey">{{details.worksat}}</p>
+                    <img src="images/icons/icons/F_icon.svg" style="width:20px; margin-right:10px;" ng-show="menu=='Facebook'">
+                    <img src="images/icons/icons/linkedin_icon.png" style="width:20px; margin-right:10px;" ng-show="menu=='LinkedIn'">
+                    <!-- <img src="images/icons/icons/ppl search.png" style="width:25px; margin-right:10px;" ng-show="menu=='Peoplesearch'"> -->
+                    <img src="images/icons/icons/black-180x180.png" style="width:20px; margin-right:10px;" ng-show="menu=='Bloomberg'">
+                    <div style="margin-top:20px;">
+                        <img src="images/icons/icons/Location-green.svg" style="width: 20px;">
+                        <span style="padding-left:10px;padding-bottom:10px;" title="{{details.otherdetails}}">{{details.otherdetails | limitTo:100}}</span>
+                    </div>
+                </div>
+            
+                <div class="check">
+                    <img ng-src="{{selectedprofiledata[menu] == $index ? 'images/icons/icons/round-chk-d-gray.svg' : 'images/icons/icons/round-chk-l-gray.svg'}}"
+                    style="cursor: pointer;width: 140px;" 
+                />
+                    <!-- <img ng-src="{{rootPersonalDetails[menu][$index].selected ? 'images/icons/icons/round-chk-d-gray.svg' : 'images/icons/icons/round-chk-l-gray.svg'}}"
+                    style="cursor: pointer;width: 140px;margin-left: 43%;" ng-click="selectedProfile[menu] = (selectedProfile[menu] == $index ? null : $index); rootPersonalDetails[menu][$index].selected = !rootPersonalDetails[menu][$index].selected"
+                /> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

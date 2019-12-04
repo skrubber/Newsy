@@ -1,0 +1,500 @@
+<style>
+    a:hover {
+        color: dimgrey;
+    }
+
+    button,
+    .input-group {
+        margin-top: 5%;
+    }
+
+    .header {
+        height: 60px;
+        background-color: #DCDCDC;
+        /* padding-left: 30px;
+                padding-top: 15px; */
+        margin-left: 2px;
+    }
+
+    .header a {
+        margin-top: 10px;
+        text-decoration: none;
+        color: black;
+    }
+
+    .md-padding {
+        padding: 0px !important;
+    }
+
+    md-tab label {
+        color: white !important;
+    }
+
+    .btn-btn-default {
+        background-color: white !important;
+        color: #75b73e !important;
+        border-radius: 0px !important;
+        float: right;
+        padding-left: 20px;
+        padding-right: 20PX;
+        padding-bottom: 3px;
+        margin-bottom: 10px;
+    }
+
+    md-dialog md-dialog-actions .md-button {
+        background-color: #75b73e!important;
+    }
+
+    md-dialog .md-dialog-content {
+        padding-top: 10px !important;
+    }
+
+    md-tabs.md-default-theme .md-tab.md-active,
+    md-tabs .md-tab.md-active,
+    md-tabs.md-default-theme .md-tab.md-active md-icon,
+    md-tabs .md-tab.md-active md-icon,
+    md-tabs.md-default-theme .md-tab.md-focused,
+    md-tabs .md-tab.md-focused,
+    md-tabs.md-default-theme .md-tab.md-focused md-icon,
+    md-tabs .md-tab.md-focused md-icon {
+        background-color: white !important;
+        color: white !important;
+        border-radius: 32px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin-top: 10px;
+    }
+
+    md-content.md-default-theme,
+    md-content {
+        background-color: none;
+    }
+
+    .nav nav-tabs .active {
+        height: 60px;
+    }
+
+    .applybackgroundtoggle {
+        background-color: #006a4d;
+        border-radius: 50px;
+        padding: 4px 0;
+        color: white;
+    }
+
+    .applybackground {
+        background-color: #75b73e;
+        color: white;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        height: 40px;
+        padding: 10px;
+        max-height: none !important;
+    }
+
+    .md-title {
+        color: #75b73e;
+        font-size: 21px;
+        font-weight: bold;
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        .popbutton {
+            padding-top: 45px;
+        }
+    }
+
+    md-toolbar {
+        height: 50px;
+        min-height: 50px;
+        max-height: 50px;
+    }
+
+    div.linkStyle a.demo {
+        display: none;
+    }
+
+    div.linkStyle:hover a.demo {
+        display: inline;
+    }
+
+    .category {
+        padding: 3px;
+        border-radius: 3px;
+        border: 1px solid #75b73e;
+        color: #75b73e;
+        font-size: 12px;
+    }
+
+        .industryblock {
+        height: 300px;
+        max-height: 300px;
+        min-height: 300px;
+    }
+</style>
+<div flex layout="row">
+    <div layout="row" flex layout-align="center center" ng-show="!industryscreen">
+        <p style="text-align:center;">Select Industry And Search</p>
+    </div>
+    <div flex layout="column" ng-show="industryscreen">
+        <div layout="row" layout-align="space-between center" style="height: 50px;background-color: #f7f7f7;min-height: 50px; padding: 0 10px;">
+            <div layout="row" layout-align="center center">
+                <!-- <img src="images\icons\icons\banking.svg" width="30"> -->
+                <b ng-hide="screenTitle == 'Financials'">{{screenTitle}}</b>
+                <b ng-show="screenTitle == 'Financials'">Financial Services</b>
+            </div>
+            <div>
+                <ul class="nav nav-tabs" layout="row" layout-align="space-between center" style="height: 50px; min-height:50px;max-height:50px; ">
+                    <div class="tablinks" ng-repeat="data in industryData" ng-class="{ 'applybackground' : data == datavalue }" style="width: 150px; text-align: center"
+                        ng-click="mainToolbarChange($index)">{{data}}</div>
+                </ul>
+            </div>
+        </div>
+        <div flex layout="column" ng-show="datavalue =='Overview'" >
+            <div class="overview" style="padding:10px;">
+                <p ng-if="screenTitle == 'Commercial Real Estate'" style="text-align:justify">Commercial real estate industry encompasses any activity related to buying, selling, leasing, maintaining
+                    non-residential properties used for commercial, profit-making purposes. Commercial real estate includes
+                    land, stores, malls, office buildings, and industrial parks.
+                </p>
+                <p ng-if="screenTitle == 'Technology'" style="text-align:justify">The technology industry relates to the research, development and/or distribution of technologically based
+                    goods and services. This industry involves businesses revolving around the manufacturing of electronics,
+                    creation of software, computers or products and services relating to information technology. Businesses
+                    are dependent on innovations coming out of the technology industry to create their enterprise software,
+                    manage their logistics systems, protect their databases and generally provide the critical information
+                    and services that allow companies to make strategic business decisions. </p>
+                <p ng-if="screenTitle == 'Financials'" style="text-align:justify">Financial services are the economic services provided by the finance industry, which encompasses a broad
+                    range of businesses that manage money, including credit unions, banks, credit-card companies, insurance
+                    companies, accountancy companies, investment companies, stock brokerages, investment funds, hedge funds,
+                    individual managers and some government-sponsored enterprises</p>
+            </div>
+            <div>
+            <div flex layout="row">
+                <div flex layout="column" layout-gt-sm="row">
+                    <div flex="33" layout="column" style="margin: 10px;">
+                        <div layout="row" layout-align="space-between center" style="height: 50px;min-height:50px;max-height:50px; background-color: #75b73e">
+                            <b style=" color: white;">&nbsp;&nbsp;Trending</b>
+                            <div layout="row" layout-align="end center">
+                                <img src="images\icons\icons\calender.svg" width="30">
+                                <md-input-container style="width: 148px; margin: 9px;">
+                                    <md-select style="background-color:white;border:none;" ng-change="trending(trendingTimeFilter)" ng-model="trendingTimeFilter"
+                                        placeholder="Time">
+                                        <md-option ng-value="value.timeid" ng-repeat="value in choosetimeid">{{value.name}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="row" layout-align="space-between center" style="height: 45px;min-height:45px; max-height:45px; background-color: #ddd">
+                            <div layout="row" layout-align="center center" style="background-color: white; border-radius: 50px; margin-left: 10px">
+                                <div style="width: 100px; text-align: center" ng-click="Togglecompany()" ng-class="(Companytoggle == true) ? 'applybackgroundtoggle' : 'dontapply'"
+                                    style="text-align:center">Companies</div>
+                                <div style="width: 100px; text-align: center" ng-click="themes()" ng-class="(Themes == true) ? 'applybackgroundtoggle' : 'dontapply'"
+                                    style="text-align:center">Themes</div>
+                            </div>
+                        </div>
+                        <div  layout="column" ng-show="Companytoggle == true" style="overflow-y: auto;border: 1px solid #ddd;" class="industryblock">
+                            <div layout="row" layout-align="center center" ng-show="loadingmessage4 == true">
+                                <p>Fetching Details</p>
+                            </div>
+                            <div ng-repeat="values in trendlist.companies" ng-click="showAdvanced(values.hash , values.company)" style="padding: 10px; border-bottom: 1px solid #ddd;"
+                                title="{{values.company}}">{{values.company}}</div>
+                        </div>
+                        <div  layout="column" ng-show="Companytoggle == false" style="overflow-y: auto;border: 1px solid #ddd;" class="industryblock">
+                            <div layout="row" layout-align="center center" ng-show="loadingmessage4 == true">
+                                <p>Fetching Details</p>
+                            </div>
+                            <div ng-repeat="values in trendlist.themes" style="padding: 10px; border-bottom: 1px solid #ddd;" ng-click="showAdvanced1(values.theme)"
+                                title="{{values.theme}}">{{values.theme}}</div>
+                        </div>
+                    </div>
+                    <div flex="33" layout="column" style="margin: 10px;">
+                        <div layout="row" layout-align="space-between center" style="height: 50px;min-height:50px;max-height:50px;  background-color: #75b73e">
+                            <div layout="row">
+                                <b style=" color: white;">&nbsp;&nbsp;Events</b>
+                            </div>
+                            <div layout="row" layout-align="end center">
+                                <img src="images\icons\icons\calender.svg" width="30">
+                                <md-input-container style="width: 150px; margin: 9px;">
+                                    <md-select style="background-color:white;border:none;" ng-change="news(eventsTimeFilter,defaultcategoryFilter)" ng-model="eventsTimeFilter"
+                                        placeholder="Time">
+                                        <md-option ng-value="value.timeid" ng-repeat="value in choosetimeid">
+                                            <p>{{value.name}}</p>
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+
+                        <div layout="row" layout-align="space-between center" style="height: 45px;min-height:45px; max-height:45px; background-color: #ddd">
+                            <div layout="row">
+                                <b>&nbsp;&nbsp;Categories</b>
+                            </div>
+                            <div layout="row" layout-align="end center" style="margin-right: 9px;">
+                                <img src="images\icons\icons\filter-icon.svg" width="24">
+                                <md-input-container style="margin: 0">
+                                    <md-select style="background-color:white;border:none; margin-top: -3px; width:146px;" ng-model="defaultcategoryFilter" placeholder="Category"
+                                        ng-change="news(eventsTimeFilter,defaultcategoryFilter)">
+                                        <md-option ng-value="values.id" ng-repeat="values in categories">{{values.name}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="column" style="overflow-y: auto;border: 1px solid #ddd;" class="industryblock">
+                            <div layout="row" layout-align="center center" ng-show="loadingmessage3 == true">
+                                <p>Fetching Details</p>
+                            </div>
+                            <div ng-repeat="values in eventslist" style="padding: 10px; border-bottom: 1px solid #ddd;" ng-hide="loadingmessage3 == true">
+                                <div layout="row" flex layout-align="center center" ng-show="values.name == 'No Data Available'">
+                                    <div>No data available</div>
+                                </div>
+                                <div layout="row" layout-align="space-between center" ng-hide="values.name == 'No Data Available'">
+
+                                    <div layout="row" layout-align="space-between center" ng-click="showAdvancedpopup(values)">
+                                        <div style="width: 380px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" title="{{values.name}}">{{values.name}}... </div>
+                                        <a style="width:70px;; text-align:right;font-size:12px;">read more</a>
+                                    </div>
+                                </div>
+                                <div layout="row" layout-align="space-between center">
+                                    <div ng-hide="values.category_name == undefined" class="category">{{values.category_name}}</div>
+                                    <div style="color: #75b73e;font-size:12px;">{{values.time}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div flex="33" layout="column" style="margin: 10px;">
+                        <div layout="row" layout-align="space-between center" style="height: 50px;min-height:50px;max-height:50px; background-color: #75b73e">
+                            <div layout="row">
+                                <b style=" color: white;">&nbsp;&nbsp;Recent Funding Activity</b>
+                            </div>
+                            <div layout="row" layout-align="end center" style="margin-left: 8px;">
+                                <img src="images\icons\icons\calender.svg" width="30">
+                                <md-input-container style="width: 148px; margin: 9px;">
+                                    <md-select style="background-color:white;border-bottom: 1px solid #ddd;" ng-change="funding(fundingActTimeFilter)" ng-model="fundingActTimeFilter"
+                                        placeholder="Time">
+                                        <md-option ng-value="value.timeid" ng-repeat="value in choosetimeid">{{value.name}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="row" layout-align="space-between center" style="padding: 0 28px 0 9px; height: 45px;min-height:45px;max-height:45px; background-color: #ddd">
+                            <div layout="row">
+                                <b>Companies</b>
+                            </div>
+                            <div layout="row" layout-align="end center">
+                                <b>Amount Raised</b>
+                            </div>
+                        </div>
+
+                        <div layout="column" style="overflow-y: auto;border: 1px solid #ddd;" class="industryblock">
+                            <div layout="row" layout-align="center center" ng-show="loadingmessage2 == true">
+                                <p>Fetching Details</p>
+                            </div>
+
+                            <div flex ng-repeat="(key, values) in fundinglist" style="padding:10px;padding-bottom:30px;border-bottom: 1px solid #ddd;"
+                                ng-hide="loadingmessage2 == true">
+                                <div layout="row" flex layout-align="center center" ng-show="values['No Data Available']== ''">No data available</div>
+                                <div flex layout-align="space-between center" layout="row" ng-hide="values['No Data Available']== ''">
+                                    <a target="_blank" title="{{values.name}}" href="{{values.url}}" ng-hide="values.url == ''" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width: 330px;">{{values.name}}</a>
+                                    <a target="_blank" title="{{values.name}}" ng-disabled="true" ng-show="values.url == ''" ng-style="{ 'cursor' : ('values.url')  ? 'not-allowed' : 'pointer' }"
+                                        style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;width: 330px;">{{values.name}}</a>
+                                    <div style=" float:right;">{{values.amount}} </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-top:10px !important;">
+                <p style="margin-left: 10px;font-size:12px;">
+                    <span style="color: red;">*</span> Trending companies/themes are identified on the basis of data before September, and are ordered 
+                    based on a relevance score. Relevance score is based on factors such as historical and current mentions of the company/theme in news articles and blogs, and recency of the mentions. </p>
+                <p style="margin-left: 10px;font-size:12px;">
+                    <span style="color: red;">**</span> The tool shows funding and M & A data for last 6 months since April 2018 and patents data for
+                    last 6 months since December 2017 </p>
+            </div>
+        </div>
+        </div>
+        <!-- <div ng-if="companies">
+                    <p>No Data</p>
+                </div> -->
+        <div flex layout="column" ng-show="datavalue =='News & Reports'" style=" padding:10px;">
+            <div flex>
+                <div layout="row" flex style="height: 45px; min-height: 45px;max-height:45px; background-color:#75b73e;">
+                    <div layout="row" flex layout-align="start center">
+                        <div style="color: white;
+                    padding: 22px;">
+                            <b>News & Reports</b>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="end center" flex>
+                        <img src="images\icons\icons\calender.svg" width="30" style="margin-left:10px;">
+                        <md-input-container style="width: 200px; margin: 15px;">
+                            <md-select style="background-color:white;border:none;" ng-change="reports(newsreportsTimeFilter)" ng-model="newsreportsTimeFilter"
+                                placeholder="Time">
+                                <md-option ng-value="value.timeid" ng-repeat="value in choosetimeid">
+                                    <p>{{value.name}}</p>
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="column" style="max-height: 450px;overflow-y: auto;border: 1px solid #ddd; min-height:450px;">
+                    <div layout="row" layout-align="center center" ng-show="loadingmessage1 == true">
+                        <p>Fetching Details</p>
+                    </div>
+                    <div class="cardfornews" ng-repeat="values in newslist['news']">
+                        <div class="cardinfo" layout="row" layout-align="space-between center">
+                            <div style="width: 650px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" title="{{values.title}}">
+                                <b>{{values.title}}</b>
+                            </div>
+                            <div style="width: 145px; text-align: right; color: #75b73e">{{values.time}}</div>
+                        </div>
+                        <p style="margin-left: 20px;
+                        padding-top: 2px;" title="{{values.description}}">{{values.description | limitTo:250}}...
+                            <a target="_blank" ng-hide="values.url == null" style="font-size:12px;" href="{{values.url}}">read more </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="dialog3.tmpl.html"><md-dialog aria-label="" flex="50">
+        <form ng-cloak >
+          <md-toolbar style="min-height:35px !important;height:35px !important;max-height:35px !important;">
+            <div class="md-toolbar-tools" >
+              <b style="margin-left: 8px;">{{heading}}&nbsp;<span ng-show="heading == 'Patent Granted'">to <span>{{companyname}}</span></span></b>
+              <span flex></span>
+              <!-- <md-button  ng-click="cancel()">
+                    X
+                </md-button> -->
+            </div>
+          </md-toolbar> 
+          <div style="background-color:#ebebeb;padding-bottom:5px;padding-top:9px;" layout="row" layout-align="space-between end">
+           <div style="padding-left: 23px;">
+           <b>{{title}}</b>   
+           </div>        
+              <div ng-hide="heading == 'Patent Granted' || heading == 'M & A'" style="padding-right: 10px;text-decoration: underline;color:#337ab7;">
+        <a target="_blank" href="{{link}}">Original Source</a>
+                    </div>
+                </div>
+         <md-dialog-content>
+                <div style="color:#75b73e;padding-left: 22px;padding-top: 10px;" ng-hide="heading == 'Patent Granted'">Posted On {{time}}</div>
+                <div style="color:#75b73e;padding-left: 22px;padding-top: 10px;" ng-hide="heading == 'Contract' || heading == 'M & A'">Granted On {{time}}</div>
+            <div class="md-dialog-content">       
+           <div style="white-space: pre-line" ng-bind="subtext"></div>
+        </div>
+          </md-dialog-content>
+        </form>
+        <div layout="row" flex layout-align="end end" class="popbutton">
+                <md-button  ng-click="cancel()" style="float:right !important;color:white !important; background-color:#75b73e !important;">
+                        Close
+                    </md-button>    
+                </div>  
+      </md-dialog>
+      </script>
+    <script type="text/ng-template" id="dialog2.tmpl.html"><md-dialog aria-label="Trending Companies" flex="50">
+        <form ng-cloak>
+          <md-toolbar>
+            <div class="md-toolbar-tools">
+              <b>Related Documents</b>
+              <span flex></span>
+              <!-- <md-button  ng-click="cancel()">
+                    X
+                </md-button> -->
+            </div>
+          </md-toolbar> 
+          <div style="height: 60px;
+          min-height: 60px; background-color:#ebebeb;" layout="row" layout-align="space-between end">
+           <div style="padding: 20px;">
+           <div>{{nameofthecompany}}</div>   
+           </div>        
+              <div>
+                        <img src="images\icons\icons\calender-black.svg" width="30" style="margin-left:10px;">
+                        <md-input-container style="width: 200px; margin: 15px;">
+                            <md-select style="background-color:white;border:none;" ng-change="companypopup(company_timeid)" ng-model="company_timeid"
+                                placeholder="Time">
+                                <md-option ng-value="value.timeid" ng-repeat="value in choosetimeid">
+                                    <div>{{value.name}}</div>
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+         <md-dialog-content>
+            <div class="md-dialog-content">
+                    <div layout="row" layout-align="center center" ng-show="loadingmessage6 == true">
+                            <p>Fetching Details</p>
+                        </div>
+                        <div ng-repeat="(key, value) in list" class="cardfornews1">
+                                <div layout="row" flex layout-align="center center" ng-show="value['No Data Available']== ''">No data available</div>
+                                <div layout="row" layout-align="space-between center">
+                                <div style="width: 650px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;padding-bottom:3px;" title="{{value.title}}" >
+                                        <b>{{value.title}}</b></div>
+                                        <span  ng-click="isRow3Open = !isRow3Open; collapsed3=!collapsed3" style="color: #337ab7;" ng-class="{'fa fa-minus' :collapsed3,'fa fa-plus':!collapsed3}"></span>
+                                    
+                                    <div style="width: 145px; text-align: right; color: #75b73e">{{value.time}}</div></div>
+                            <p ng-show="isRow3Open" title="{{value.text}}"style="white-space: pre-line" ng-bind="value.text"></p>  
+                             <!-- <a target="_blank" href="{{value.url}}" ng-hide="value['No Data Available']== ''">&nbsp;Read More</a>   -->
+                           </div>
+        </div>
+          </md-dialog-content>
+        </form>
+        <div layout="row" flex layout-align="end end" class="popbutton">
+                <md-button  ng-click="cancel()" style="float:right !important;color:white !important; background-color:#75b73e !important;">
+                        Close
+                    </md-button>    
+                </div>  
+      </md-dialog>
+      </script>
+    <script type="text/ng-template" id="dialog1.tmpl.html">
+        <md-dialog aria-label="Trending Themes" flex="50">
+        <form ng-cloak>
+          <md-toolbar>
+            <div class="md-toolbar-tools">
+              <b>Related Documents</b>
+              <span flex></span>
+            </div>
+          </md-toolbar> 
+          <div style="height: 60px;
+          min-height: 60px; background-color:#ebebeb;" layout="row" layout-align="space-between end">
+          <div style="padding: 20px;">
+                {{nameofthetheme}}      
+           </div>         
+              <div>
+                        <img src="images\icons\icons\calender-black.svg" width="30" style="margin-left:10px;">
+                        <md-input-container style="width: 200px; margin: 15px;">
+                            <md-select style="background-color:white;border:none;" ng-change="themepopup(theme_timeid)" ng-model="theme_timeid"
+                                placeholder="Time">
+                                <md-option ng-value="value.timeid" ng-repeat="value in choosetimeid">
+                                    <p>{{value.name}}</p>
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+         <md-dialog-content>
+            <div class="md-dialog-content">  
+                    <div layout="row" layout-align="center center" ng-show="loadingmessage5 == true">
+                            <p>Fetching Details</p>
+                        </div>          
+                    <div ng-repeat="(key, value) in list"  class="cardfornews1">
+                            <div layout="row" flex layout-align="center center" ng-show="value['No Data Available']== ''">No data available</div>
+                            <div layout="row" layout-align="space-between center">
+                            <div style="width: 650px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;padding-bottom:3px;" title="{{value.title}}" >
+                                    <b>{{value.title}}</b></div>
+                                    <span  ng-click="isRow3Open = !isRow3Open; collapsed3=!collapsed3" style="color: #337ab7;" ng-class="{'fa fa-minus' :collapsed3,'fa fa-plus':!collapsed3}"></span>
+                                
+                                <div style="width: 145px; text-align: right; color: #75b73e">{{value.time}}</div></div>
+                        <p ng-show="isRow3Open" title="{{value.text}}" style="white-space:pre-line" ng-bind="value.text"></p>  
+                         <!-- <a target="_blank" href="{{value.url}}" ng-hide="value['No Data Available']== ''">&nbsp;Read More</a>   -->
+                                          
+                        </div> 
+                    </div>
+          </md-dialog-content>
+        </form>  
+        <div layout="row" flex layout-align="end end" class="popbutton">
+        <md-button  ng-click="cancel()" style="float:right !important;color:white !important; background-color:#75b73e !important;">
+                Close
+            </md-button>    
+        </div>  
+      </md-dialog>
+     
+      </script> 

@@ -1,0 +1,167 @@
+﻿<style>
+    .margin {
+        margin-top: 2%;
+        margin-left: 4.5%;
+        margin-bottom: 10px;
+    }
+
+    a:hover {
+        color: dimgrey;
+    }
+
+    button,
+    .input-group {
+        margin-top: 5%;
+    }
+
+    .header {
+        height: 60px;
+        background-color: #DCDCDC;
+        /* padding-left: 30px;
+            padding-top: 15px; */
+        margin-left: 2px;
+    }
+
+    hr {
+        margin-left: -2px;
+        width: 90.1%;
+    }
+
+    .header a {
+        margin-top: 10px;
+        text-decoration: none;
+        color: black;
+    }
+
+    .applybackground {
+        background-color: white;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        height: 60px;
+        max-height: none !important;
+    }
+</style>
+
+<div flex>
+    <hr>
+    <div flex layout="row">
+        <div flex="10" layout="row" layout-align="center start">
+            <ul class="sidebar">
+                <li class="sidenavbar" ui-sref-active="active" ng-show="sidebarmenudata[0] == true">
+                    <img src="images/icons/icons/company-icon.svg" class="imge1" style="width: 15px;">
+                    <img src="images/icons/icons/company-icon-black.svg" class="color1" style="width: 15px;">
+                    </br>
+                    <a class="tab1" ui-sref="company">
+                        Company
+                    </a>
+                </li>
+                <li class="sidenavbar" ui-sref-active="active" ng-show="sidebarmenudata[1] == true">
+                    <img src="images/icons/icons/User-icon.svg" class="imge1" style="width: 15px;">
+                    <img src="images/icons/icons/User-icon-black.svg" class="color1" style="width: 15px;">
+                    </br>
+                    <a class="tab1" ui-sref="main"> Individual</a>
+                </li>
+                <li class="sidenavbar" ui-sref-active="active" ng-show="sidebarmenudata[2] == true">
+                    <img src="images/icons/icons/industry-icon.svg" class="imge1" style="width: 15px;">
+                    <img src="images/icons/icons/industry-icon-black.svg" class="color1" style="width: 15px;">
+                    </br>
+                    <a class="tab1" ui-sref="industry"> Industry</a>
+                </li>
+            </ul>
+        </div>
+
+        <div flex="80">
+            <div ng-if="flag == 2" class="aligncenter2">
+                <p>Fetching profile details...</p>
+            </div>
+            <div ng-if="flag == 0">
+                <div layout="row" flex style="background-color: #ddd">
+                    <!-- <div ng-if="menuData.length" flex="15" layout="row" class="tab" style="background: transparent; border: 0; border-bottom: 1px">
+                        <a class="tablinks" ng-repeat="menu in menuData" ng-class="{ 'selectedTab' : menu == menuSelectedValue }" title="{{ companyData.data[menu] != nodata ? 'Select a relavant profile' : nodata }}"
+                            ng-click="tabClicked(menu)">{{menu}}</a>
+                        <div layout="row" id="container" ng-if="menuData.length">
+                            <md-button class="md-raised" style="background-color:#95af28; width:20px; height: 30px; right: 5%; align-self:self-end; margin: 7px 8px;"
+                                ng-click="proceed()">Next</md-button>
+                        </div>
+                    </div> -->
+                    <div ng-if="menuData.length" style="padding: 8px" flex="15" ng-class="{'tab': menuSelectedValue === menu}" ng-repeat="menu in menuData"
+                        ng-class="(menu == true) ? 'applybackground' : 'dontapply'" style="text-align:center">
+                        <a href="#" layout="row" layout-align="start center" ng-click="tabClicked(menu);">
+                            <img src="{{images[menu]}}" style="width:25px; margin-right:10px;">
+                            <span>{{menu}}</span>
+                        </a>
+                    </div>
+                    <div layout="row" id="container" ng-if="menuData.length">
+                        <button type="submit" class="btn btn-default" style="border: none; margin-left: 85%;
+                            margin-top: 6% !important;" ng-click="proceed()">Next</button>
+                        <!-- <md-button class="md-raised" style="background-color:#95af28; margin-left: 80%;
+                            padding: 0px !important;                       
+                           margin-top: 6% !important;" ng-click="proceed()">Next</md-button> -->
+                    </div>
+                    <!--<div flex="15" ng-class="(linkedin == true) ? 'applybackground' : 'dontapply'" style="text-align:center">
+                        <a href="#" ng-click="showdiv();">
+                            <span>
+                                <img src="images/icons/icons/linkedin_icon.png" style="width:25px; margin-right:10px;">
+                            </span>Linkedin</a>
+                    </div>
+                    <div flex="15" ng-class="(pplsearch == true) ? 'applybackground' : 'dontapply'" style="text-align:center">
+                        <a href="#" ng-click="showdiv2();">
+                            <span>
+                                <img src="images/icons/icons/ppl search.png" style="width:25px; margin-right:10px;">
+                            </span>People Search</a>
+                    </div>
+                    <div flex="15" ng-class="(bloomberg == true) ? 'applybackground' : 'dontapply'" style="text-align:center">
+                        <a href="#" ng-click="showdiv3();">
+                            <span>
+                                <img src="images/icons/icons/black-180x180.png" style="width:25px; margin-right:10px;">
+                            </span>Bloomberg</a>
+                    </div>
+                    <div flex="20">
+                        <div>
+                            <button type="submit" class="btn btn-default" style="background-color: white !important;
+                                color:#75b73e !important;
+                                margin-top: 0px !important;
+                                margin-left: 135% !important;" ng-click="proceed()">Next</button>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div ng-repeat="menu in menuData" ng-show="menu == menuSelectedValue">
+                    <div ng-show="personaldetails[menu][0] == 'No profiles found'">
+                        <p class="nodata" style="text-align:center;">No Profiles Found</p>
+                    </div>
+                    <div flex layout="row" class="card" ng-show="personaldetails[menu][0] != 'No profiles found'" ng-if="flag == 0" ng-repeat="details in personaldetails[menuSelectedValue]">
+                        <div flex layout="row">
+                            <div flex="20" layout="column">
+                                <img ng-src="{{details.photourl}}" class="shadow1" alt="No image" ng-if="details.photourl" ng-hide="data == 'No profiles found'">
+                                <img src="https://career.utk.edu/wp-content/uploads/sites/56/2017/06/image_preview.jpg" class="shadow1" alt="No image" ng-if="!details.photourl">
+                            </div>
+                            <div flex="60" layout="column">
+                                <h2>
+                                    <b>
+                                        <a href="{{details.profileurl}}"> {{details.profilename}}</a>
+                                    </b>
+                                </h2>
+                                <p style="color:grey">{{details.worksat}}</p>
+                                <img src="images/icons/icons/F_icon.svg" style="width:20px; margin-right:10px;" ng-show="menu=='Facebook'">
+                                <img src="images/icons/icons/linkedin_icon.png" style="width:20px; margin-right:10px;" ng-show="menu=='LinkedIn'">
+                                <!-- <img src="images/icons/icons/ppl search.png" style="width:25px; margin-right:10px;" ng-show="menu=='Peoplesearch'"> -->
+                                <img src="images/icons/icons/black-180x180.png" style="width:20px; margin-right:10px;" ng-show="menu=='Bloomberg'">
+                                <div style="margin-top:20px;">
+                                    <img src="images/icons/icons/Location-green.svg" style="width: 20px;">
+                                    <span style="padding-left:10px;">{{details.otherdetails | limitTo:200}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div flex="10" layout="column" class="check">
+                            <img ng-src="{{(selectedProfile[menu] == $index) ? 'images/icons/icons/round-chk-d-gray.svg' : 'images/icons/icons/round-chk-l-gray.svg'}}"
+                                style="cursor: pointer" ng-click="selectedProfile[menu] = (selectedProfile[menu] == $index ? null : $index); personaldetails[menu][$index].selected = true"
+                            />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

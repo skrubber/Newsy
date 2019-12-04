@@ -1,0 +1,834 @@
+<style>
+    .applybackground {
+        background-color: #75b73e;
+        color: white;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        height: 45px;
+        padding: 10px;
+        max-height: none !important;
+    }
+ 
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        .shadow2 {
+            min-width: 76px;
+            max-width: 76px;
+            width: 76px;
+            border-radius: 3px;
+            padding-top: 0px;
+            padding-bottom: 1px;
+            margin: 5px;
+        }
+    }
+    .noofvaluesactive {
+        background-color: white;
+        color: #75b73e;
+        padding: 3px;
+        border-radius: 50%;
+    }
+    .applybackgroundcolor {
+        color: red;
+    }
+
+    .md-tab {
+        text-overflow: clip!important;
+    }
+
+    .noofvalues {
+        font-size: 14px;
+        background-color: #75b73e;
+        color: white;
+        padding: 3px;
+        border-radius: 50%;
+    }
+</style>
+<div style="border-bottom:1px solid #ddd;" layout="row" layout-align="space-between center">
+    <div layout="row" layout-align="space-between center">
+            <div>
+                <img src="{{companydetails.CompanyLogo}}" class="shadow1" ng-if="companydetails.CompanyLogo">
+                <img src="https://career.utk.edu/wp-content/uploads/sites/56/2017/06/image_preview.jpg" class="shadow1" alt="No image" ng-if="!companydetails.CompanyLogo">
+            </div>
+            <div style="padding-left:10px !important; padding-top:10px;">
+                <a ng-hide="companydetails['Website'].value == null" style="font-size: 21px !important; color:grey !important" target="_blank"
+                    href="{{companydetails['Website'].value}}">{{companydetails.Company}}</a>
+                <a ng-show="companydetails['Website'].value == null" class="social" ng-disabled="true" ng-style="{ 'cursor' : ('Company')  ? 'not-allowed' : 'pointer' }">{{companydetails.Company}}</a>
+                <p>{{companydetails['Company Address']}}</p>
+            </div>
+        </div>
+    <div layout="row">
+        <div flex layout="row">
+            <div>
+                <a ng-hide="companydetails.FacebookUrl == null || companydetails.FacebookUrl == 'NA'" class="social" title="Facebook" target="_blank"
+                    href="{{companydetails.FacebookUrl}}">
+                    <img class="socialmedia" src="images/icons/icons/F_icon.svg">
+                </a>
+            </div>
+            <div>
+                <a ng-hide="companydetails.LinkedInUrl == null || companydetails.LinkedInUrl == 'NA'" class="social" title="LinkedIn" target="_blank"
+                    href="{{companydetails.LinkedInUrl}}">
+                    <img class="socialmedia" src="images/icons/icons/linkedin_icon.png">
+                </a>
+            </div>
+            <div>
+                <a class="social" ng-hide="companydetails.BloomBergUrl == null || companydetails.BloomBergUrl == 'NA'" target="_blank" title="BloomBerg"
+                    href="{{companydetails.BloomBergUrl}}">
+                    <img class="socialmedia" src="images/icons/icons/black-180x180.png">
+                </a>
+            </div>
+            <div>
+                <a ng-hide="companydetails.TwitterUrl == null" title="Twitter" class="social" target="_blank" href="{{companydetails.TwitterUrl}}">
+                    <img class="socialmedia" src="images/icons/icons/Twitter_Bird.svg" style="background-color:white;">
+                </a>
+            </div>
+        </div>
+        <div style="margin-right: 10px;">
+            <div flex layout="column" ng-click="baseToDocx()" layout-align="center center" style="cursor: pointer;">
+                <div class="btndownload">
+                    <img width="25" style="padding-bottom:3px;margin-right: 2px;margin-left:4px;" title="Download Word Document" src="images/icons/icons/Microsoft_Word_2013_logo.svg"> Download</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout="column" flex ng-hide="LoadingShow == true">
+    <md-content flex layout="row" style="padding: 0 5px; border-bottom: 1px solid #ddd" >
+        <md-tabs flex md-border-bottom style="width:100%;">
+            <md-tab label="Overview" flex ng-click="sources(companydetails['Overview_Sources'])" title="Overview">
+                <md-tab-label>
+                    Overview
+                    <!-- <md-tooltip md-direction="top" ng-if="companydetails['Acquistion table'] == undefined || companydetails['Acquistion table'] == 'NA'">
+                        No data available
+                    </md-tooltip>                   -->
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="column" flex style="height: 100%;margin: 0 10px;">
+                        <p style="margin-top: 10px;text-align:justify;">{{overviewtab['Overview']}}</p>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Industry</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Industry']}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Headquarters</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Head quarters']}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>No of employees</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Company size']}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Year Founded</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Year Founded']}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Company Type</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Company type']}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Revenue</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Revenue']}}
+                                    <span ng-hide="overviewtab['Revenue'] == 'NA' || overviewtab['Revenue'] == '-' || overviewtab['Revenue'] == undefined">&nbsp;(2017)</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Fortune 500 Rank</b>
+                            </div>
+                            <div>
+                                <p>: &nbsp;{{overviewtab['Fortune_500']}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Competitors</b>
+                            </div>
+                            <div ng-show="overviewtab['Company competitors'] == 'NA'">
+                                <span>: &nbsp;NA</span>
+                            </div>
+                            <div ng-hide="overviewtab['Company competitors'] == 'NA'">
+
+                                <div layout="row" ng-repeat="CompCompetitors in overviewtab['Company competitors']" class="ellipsis">
+                                    <span ng-if="$index == 0">:&nbsp;</span>
+                                    <span ng-if="$index != 0">&nbsp;&nbsp;</span>
+                                    <span> -&nbsp;</span>
+                                    <a target="_blank" href="{{CompCompetitors['url']}}" style="text-decoration: underline">{{CompCompetitors['Name']}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </md-tab-body>
+            </md-tab>
+            <md-tab flex ng-click="sources(companydetails['Aquisitions_Sources'])" ng-disabled="companydetails['Acquistion table'] == undefined || companydetails['Acquistion table'] == 'NA'">
+                <md-tab-label>
+                    Acquisitions
+                    <span ng-repeat="values in companydetails['Aquistions']"  ng-if="values['Number of Acquisitions ']" ng-class="active ? 'noofvaluesactive' : 'noofvalues'">
+                        {{values['Number of Acquisitions ']}}
+                    </span>
+                    <md-tooltip md-direction="top" ng-if="companydetails['Acquistion table'] == undefined || companydetails['Acquistion table'] == 'NA'">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+
+                <md-tab-body flex style="height: 100%;">
+                    <div ng-hide="companydetails['Acquistion table'] == undefined || companydetails['Acquistion table'] == 'NA'">
+                        <div flex layout="column" style="padding-left: 10px">
+                            <div layout="row" layout-align="space-between center">
+                                <div  layout-align="start start" style="padding: 10px 0; color: #75b73e">
+                                    <b>Recent Acquisitions:</b>
+                                </div>
+                                <div  style="padding: 10px 0;font-size:12px !important" ng-hide="companydetails['timestamp'] == '' || companydetails['timestamp'] == undefined">
+                                    <span style="color: red; float: left;">*&nbsp;</span>Data as of {{companydetails['timestamp']}}</div>
+
+                            </div>
+                            <div layout="row">
+                                <div flex="30">
+                                    <b>Announced Date</b>
+                                </div>
+                                <div flex="30">
+                                    <b>Organization Name</b>
+                                </div>
+
+                                <div style="width: 100px; text-align: right">
+                                    <b>Price</b>
+                                </div>
+                            </div>
+                            <div layout="row" ng-repeat="AT in companydetails['Acquistion table']" style="margin-top: 10px;">
+                                <div flex="30">
+                                    <p>{{AT['Announced Date']}} </p>
+                                </div>
+                                <div flex="30">
+                                    <a href="{{AT['Acquiree_url']}}" target="_blank">{{AT['Acquired Organization Name']}}</a>
+                                </div>
+
+                                <div style="width: 100px; text-align: right">
+                                    <p>{{AT['Price']}} </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+
+            </md-tab>
+            <md-tab flex ng-click="sources(companydetails['Investments_Sources'])" ng-disabled="investmenttab['Investment table'] == null || investmenttab['Investment table'] == undefined || investmenttab['Investment table'] == ''">
+                <md-tab-label>
+                    Investments
+                    <span ng-repeat="values in companydetails['Recent Investment']" ng-class="active1 ? 'noofvaluesactive' : 'noofvalues'" ng-if="values['Number of Investments ']">
+                        &nbsp;{{values['Number of Investments ']}}
+                    </span>
+                    <md-tooltip md-direction="top" ng-if="investmenttab['Investment table'] == null || investmenttab['Investment table'] == undefined || investmenttab['Investment table'] == ''">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div ng-hide="investmenttab['Investment table'] == null || investmenttab['Investment table'] == undefined || investmenttab['Investment table'] == ''">
+                        <div flex layout="column" style="padding-left: 10px">
+                       <div layout="row"  layout-align="space-between center">
+                            <div style="padding: 10px 0; color: #75b73e">
+                                    <b>Recent Investments:</b>
+                                </div>
+                        <div  style="padding: 10px 0;font-size:12px !important" ng-hide="companydetails['timestamp'] == '' || companydetails['timestamp'] == undefined">
+                            <span style="color: red">*&nbsp;</span>Data as of May 5,2018</div>
+                       </div>
+                           
+                            <div layout="row">
+                                <div flex="20">
+                                    <b>Announced Date</b>
+                                </div>
+                                <div flex="20">
+                                    <b>Organization Name</b>
+                                </div>
+                                <div flex="10">
+                                    <b>Lead Investor</b>
+                                </div>
+                                <div flex="20">
+                                    <b>Funding Round</b>
+                                </div>
+                                <div flex="10" style="width: 100px; text-align: right">
+                                    <b>Amount Invested</b>
+                                </div>
+                            </div>
+                            <div layout="row" ng-repeat="InvTable in investmenttab['Investment table']" style="margin-top: 10px;">
+                                <div flex="20">
+                                    <p>{{InvTable['Announced Date']}}</p>
+                                </div>
+                                <div flex="20">
+                                    <a href="{{InvTable['Organizationurl']}}" target="_blank">{{InvTable['Organization Name']}}</a>
+                                </div>
+                                <div flex="10">
+                                    <p>{{InvTable['Lead Investor']}}</p>
+                                </div>
+                                <div flex="20" style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;" title="{{InvTable['Funding Round ']}}">
+                                    <p>{{InvTable['Funding Round']}}</p>
+                                </div>
+                                <div flex="10" style="width: 100px; text-align: right;">
+                                    <p>{{InvTable['Money Raised']}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab flex ng-click="sources(companydetails['funding_Sources'])" ng-disabled="fundstab['Funding table'] == undefined && fundstab['Funding rounds table'] == undefined">
+                <md-tab-label>
+                    Funds Raised
+                    <!-- <span ng-class="active2 ? 'noofvaluesactive' : 'noofvalues'">
+                        &nbsp;{{fundstab['Funding']}}{{fundstab['Funding rounds']}}
+                    </span> -->
+                     <span ng-class="active2 ? 'noofvaluesactive' : 'noofvalues'" ng-if="funding">{{funding}}</span>
+                    <md-tooltip md-direction="top" ng-if="fundstab['Funding table'] == undefined  fundstab['Funding rounds table'] == undefined">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div ng-hide="fundstab['Funding table'] == null || fundstab['Funding table'] == undefined || fundstab['Funding table'] == '' ">
+                        <div flex layout="column" style="padding-left: 10px">
+                              <div layout="row" layout-align="space-between center">
+                                    <div  style="padding: 10px 0; color: #75b73e">
+                                            <b>Recent Funds Raised (<span>{{fundstab['Funding']}}</span>):</b>
+                                        </div>
+                                <div style="padding: 10px 0;font-size:12px !important" ng-hide="companydetails['timestamp'] == '' || companydetails['timestamp'] == undefined">
+                                    <span style="color: red">*&nbsp;</span>Data as of {{companydetails['timestamp']}}</div>
+                              </div>
+                            <div>
+                               
+                                <div layout="row">
+                                    <div flex="20">
+                                        <b>Announced Date</b>
+                                    </div>
+                                    <div flex="20">
+                                        <b>Funding</b>
+                                    </div>
+                                    <div flex="10" style="width: 100px; text-align: right;">
+                                        <b>Amount Raised</b>
+                                    </div>
+
+                                </div>
+                                <div layout="row" ng-repeat="funTable in fundstab['Funding table']" style="margin-top: 10px;">
+                                    <div flex="20">
+                                        <p>{{funTable['Announced Date']}}</p>
+                                    </div>
+                                    <div flex="20">
+                                        <a href="{{funTable['Fund_url']}}" target="_blank">{{funTable['Fund Name']}}</a>
+                                    </div>
+
+                                    <div flex="10" style="width: 100px; text-align: right;">
+                                        <p>{{funTable['Money Raised']}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div ng-hide="fundstab['Funding rounds table'] == null || fundstab['Funding rounds table'] == undefined || fundstab['Funding rounds table'] == ''">
+                            <div layout="row" layout-align="space-between center" style="padding: 0 10px;">
+                                <div  style="padding: 10px 0; color: #75b73e">
+                                    <b>Recent Funding Rounds (<span>{{fundstab['Funding rounds']}}</span>):</b>
+                                </div>
+                                <div  style="padding: 10px 0;font-size:12px !important" ng-hide="companydetails['timestamp'] == '' || companydetails['timestamp'] == undefined || fundstab['Funding']">
+                                    <span style="color: red">*&nbsp;</span>Data as of {{companydetails['timestamp']}}</div>
+                            </div>
+                            <div flex layout="column" style="padding-left: 10px">
+
+                                <div layout="row">
+                                    <div flex="20">
+                                        <b>Announced Date</b>
+                                    </div>
+                                    <div flex="20">
+                                        <b>Funding Round Name</b>
+                                    </div>
+                                    <div flex="15">
+                                        <b>Number of Investors</b>
+                                    </div>
+                                    <div flex="10" style="width: 100px; text-align: right;">
+                                        <b>Amount Raised</b>
+                                    </div>
+                                </div>
+                                <div layout="row" ng-repeat="FunroundTable in fundstab['Funding rounds table']" style="margin-top: 10px;">
+                                    <div flex="20">
+                                        <p>{{FunroundTable['Announced Date']}}</p>
+                                    </div>
+                                    <div flex="20">
+                                        <a href="{{FunroundTable['Transactionurl']}}" target="_blank">{{FunroundTable['Transaction Name']}}</a>
+                                    </div>
+                                    <div flex="15">
+                                        <p style="text-align:center">{{FunroundTable['Number of Investors']}}</p>
+                                    </div>
+
+                                    <div flex="10" style="width: 100px; text-align: right;">
+                                        <p style="text-align:right">{{FunroundTable['Money Raised']}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </md-tab-body>
+
+            </md-tab>
+            <md-tab ng-click="sources(companydetails['Financials_Sources'])" ng-disabled="companydetails['Financials'] == 'NA' || companydetails['Financials'] == undefined">
+                <md-tab-label>
+                    Financials (FY&nbsp;2017)
+                    <md-tooltip md-direction="top" ng-if="companydetails['Financials'] == 'NA' || companydetails['Financials'] == undefined">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div flex layout="column" style="padding-left: 10px; margin-top:20px;" ng-hide="companydetails['Financials'] == 'NA' || companydetails['Financials'] == undefined">
+                        <div layout="row" style="margin-top:10px;">
+                            <div layout="row" flex>
+                                <div flex="20">
+                                    <b>Revenue</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="40" style="text-align:right;" ng-class="(companydetails['Financials'].Revenue[0] == '-' && companydetails['Financials'].Revenue[1] == '$') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Revenue}}</div>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <b>Revenue Growth (YoY)</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="30" style="text-align:right;" ng-class="(companydetails['Financials'].Revenue_Growth[0] == '-') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Revenue_Growth}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div layout="row" style="margin-top:10px;">
+                            <div layout="row" flex>
+                                <div flex="20">
+                                    <b>Gross Profit</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp;</span>
+                                    <div flex="40" style="text-align:right;" ng-class="(companydetails['Financials'].Gross_Profit[0] == '-' && companydetails['Financials'].Gross_Profit[1] == '$') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Gross_Profit}}</div>
+                                </div>
+                                <div flex="20">
+                                    <b>Gross Profit Margin</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="30" style="text-align:right;" ng-class="(companydetails['Financials'].Gross_Profit_Margin[0] == '-') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Gross_Profit_Margin}} </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div layout="row" style="margin-top: 15px;">
+                            <div layout="row" flex>
+                                <div flex="20">
+                                    <b>EBITDA</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="40" style="text-align:right;" ng-class="(companydetails['Financials'].EBITDA[0] == '-' && companydetails['Financials'].EBITDA[1] == '$') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].EBITDA}}</div>
+                                </div>
+                                <div flex="20">
+                                    <b>EBITDA Margin</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="30" style="text-align:right;" ng-class="(companydetails['Financials'].EBITDA_Margin[0] == '-') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].EBITDA_Margin}} </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div layout="row" style="margin-top:10px;">
+                            <div layout="row" flex>
+                                <div flex="20">
+                                    <b>Operating Income</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="40" style="text-align:right;" ng-class="(companydetails['Financials'].Operating_Income[0] == '-' && companydetails['Financials'].Operating_Income[1] == '$') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Operating_Income}} </div>
+                                </div>
+                                <div flex="20">
+                                    <b>Operating Income Margin</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="30" style="text-align:right;" ng-class="(companydetails['Financials'].Operating_Margin[0] == '-') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Operating_Margin}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div layout="row" style="margin-top: 15px;">
+                            <div layout="row" flex>
+                                <div flex="20">
+                                    <b>Net Income</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="40" style="text-align:right;" ng-class="(companydetails['Financials'].Net_Income[0] == '-' && companydetails['Financials'].Net_Income[1] == '$') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Net_Income}}</div>
+                                </div>
+                                <div flex="20">
+                                    <b>Net Income Margin</b>
+                                </div>
+                                <div flex="20" layout="row">
+                                    <span>:&nbsp; </span>
+                                    <div flex="30" style="text-align:right;" ng-class="(companydetails['Financials'].Net_Income_Margin[0] == '-') ? 'applybackgroundcolor' : 'dontapply'">{{companydetails['Financials'].Net_Income_Margin}}</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-click="sources1(companydetails2['Strategies_Sources'])" ng-disabled="companydetails2.strategic_focus_heading == null">
+                <md-tab-label>
+                    Strategic Focus
+                    <md-tooltip md-direction="top" ng-if="message == false && strategic_focus == null">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div ng-hide="strategic_focus == null">
+                        <div ng-hide="strategic_focus == null">
+                            <p style="margin:10px;">
+                                <span style="color:red;font-size:12px !important">*</span>&nbsp;Following fields display the excerpts from
+                                <a href="{{companydetails2.strategic_focus_source}}" target="_blank">{{companydetails2.strategic_focus_heading}}</a>
+                            </p>
+                        </div>
+                        <div ng-show="strategic_focus != null" layout="column" style="padding-left: 10px">
+                            <div layout="row" style="padding-bottom: 20px">
+                                <div flex="10">
+                                    <b>Growth Strategy</b>
+
+                                </div>
+                                <div flex="5">
+                                    <span>:&nbsp; </span>
+                                </div>
+                                <div flex="85" layout="column">
+                                    <div ng-show="strategic_focus['Growth strategy'].summary == undefined">NA</div>
+
+                                    <div layout="row" ng-repeat="summary in strategic_focus['Growth strategy'].summary" style="padding-bottom: 5px">
+                                        <div>-</div>
+                                        <div>
+                                            <p style="text-align:justify;">"{{summary}}"</p>
+                                        </div>
+                                    </div>
+                                    <a href="{{strategic_focus['Growth strategy'].url}}" target="_blank" ng-hide="strategic_focus['Growth strategy'].url  == null">View Source</a>
+                                </div>
+                            </div>
+                            <div layout="row" style="padding-bottom: 20px">
+                                <div flex="10">
+                                    <b>Initiatives Taken</b>
+                                </div>
+                                <div flex="5">
+                                    <span>:&nbsp; </span>
+                                </div>
+                                <div flex="85" layout="column">
+                                   
+                                    <div ng-show="strategic_focus['Initiatives taken'].summary == undefined">NA</div>
+                                    <div layout="row" ng-repeat="summary in strategic_focus['Initiatives taken'].summary" style="padding-bottom: 5px">
+                                        <div>-</div>
+                                        <div>
+                                            <p style="text-align:justify;">"{{summary}}"</p>
+                                        </div>
+                                    </div>
+                                    <a href="{{strategic_focus['Initiatives taken'].url}}" target="_blank" ng-hide="strategic_focus['Initiatives taken'].url  == null">View Source</a>
+                                </div>
+                            </div>
+                            <div layout="row" style="padding-bottom: 20px">
+                                <div flex="10">
+                                    <b>Cost Savings</b> 
+                                </div>
+                                <div flex="5">
+                                    <span>:&nbsp; </span>
+                                </div>
+                                <div flex="85" layout="column">
+                                   
+                                    <div ng-show="strategic_focus['Cost Savings'].summary == undefined">NA </div>
+                                    <div layout="row" ng-repeat="summary in strategic_focus['Cost Savings'].summary" style="padding-bottom: 5px">
+                                        <div>-</div>
+                                        <div>
+                                            <p style="text-align:justify;">"{{summary}}"</p>
+                                        </div>
+                                    </div>
+                                    <a href="{{strategic_focus['Cost Savings'].url}}" target="_blank" ng-hide="strategic_focus['Cost Savings'].url  == null">View Source </a>
+                                </div>
+                            </div>
+                            <div layout="row" style="padding-bottom: 20px">
+                                <div flex="10">
+                                    <b>Sustainability</b>
+                                </div>
+                                <div flex="5">
+                                    <span>:&nbsp; </span>
+                                </div>
+                                <div flex="85" layout="column">
+                                   
+                                    <div ng-show="strategic_focus['Sustainability'].summary == undefined">NA </div>
+                                    <div layout="row" ng-repeat="summary in strategic_focus['Sustainability'].summary" style="padding-bottom: 5px">
+                                        <div>-</div>
+                                        <div>
+                                            <p style="text-align:justify;">"{{summary}}"</p>
+                                        </div>
+                                    </div>
+                                    <a href="{{strategic_focus['Sustainability'].url}}" target="_blank" ng-hide="strategic_focus['Sustainability'].url == null">View Source</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-click="sources1(companydetails2['Ar_Sources'])" ng-disabled="companydetails2['Recent Earnings call (links)'] == 'NA' && companydetails2['Annual_reports'] == 'NA' || companydetails2['Recent Earnings call (links)'] ==undefined && companydetails2['Annual_reports'] == undefined">
+                <md-tab-label>
+                    Annual Reports & Earning Calls
+                    <md-tooltip md-direction="top" ng-if="companydetails2['Recent Earnings call (links)'] == 'NA' && companydetails2['Annual_reports'] == 'NA' || companydetails2['Recent Earnings call (links)'] ==undefined && companydetails2['Annual_reports'] == undefined">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;margin-top:10px;">
+                    <div flex layout="row" style="height: 100%;" layout-align="center center" ng-if="message == true">
+                        <span>Fetching Details</span>
+                    </div>
+                    <div ng-show="companydetails2 != null && companydetails2['Recent Earnings call (links)'] != 'NA' || companydetails2['Annual_reports'] != 'NA'"
+                        layout="column" style="padding-left: 10px">
+                        <div layout="column">
+                            <div ng-hide="companydetails2['Recent Earnings call (links)'] == 'NA' || companydetails2['Recent Earnings call (links)'] == NA || companydetails2['Recent Earnings call (links)'] ==undefined">
+                                <b>Earning Calls :</b>
+
+                                <div layout="column">
+                                    <div layout="row" ng-repeat="REC in companydetails2['Recent Earnings call (links)']" class="ellipsis">
+                                        <span>-</span>
+                                        <a target="_blank" href="{{REC['Link']}}">{{REC['Title']}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column">
+                            <div ng-hide="companydetails2['Annual_reports'] == 'NA' || companydetails2['Annual_reports'] == NA || companydetails2['Annual_reports'] == undefined">
+                                <b>Annual Reports :</b>
+                                <div layout="column">
+                                    <div layout="row" ng-repeat="reports in companydetails2['Annual_reports']" class="ellipsis">
+                                        <span>-</span>
+                                        <a target="_blank" href="{{reports['Link']}}">{{reports['Title']}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-click="sources1(companydetails2['C_level_Sources'])" ng-disabled="newstab == null || (newstab['News Mentions']==undefined && newstab['C-Level Changes']=='NA')">
+                <md-tab-label>
+                    News
+                    <md-tooltip md-direction="top" ng-if="newstab == null">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%; margin-top:10px;">
+                    <div flex layout="row" style="height: 100%;" layout-align="center center" ng-if="message == true">
+                        <span>Fetching Details</span>
+                    </div>
+                    <div ng-show="newstab !== null" layout="column" style="padding-left: 10px">
+                        <div layout="column" ng-if="newstab['C-Level Changes'] ==''||newstab['C-Level Changes']==undefined || newstab['C-Level Changes'] == null">
+                            <b>Executive team changes :</b>
+                            <div layout="row" ng-repeat="CLC in newstab['C-Level Changes']" class="ellipsis">
+                                <span>-</span>
+                                <a target="_blank" href="{{CLC['Link']}}">{{CLC['Title']}}</a>
+                                <span style="font-size:14px !important;padding-top:2px;">&nbsp;&nbsp;-&nbsp;{{CLC['date']}}</span>
+                            </div>
+                        </div>
+                        <div layout="column" ng-show="newstab !== null">
+                            <div layout="column" ng-hide="newstab['News Mentions'] ==''||newstab['News Mentions']==undefined || newstab['News Mentions'] == null">
+                                <div ng-repeat="news in newstab['News Mentions']">
+                                    <div ng-repeat="(key, obj) in news">
+                                        <div>
+                                            <b>{{key}}:</b>
+                                        </div>
+                                        <div layout="row" ng-repeat="newsObj in obj" class="ellipsis">
+                                            <span>-</span>
+                                            <a target="_blank" href="{{newsObj['Link']}}">{{newsObj['Title']}}</a>
+                                            <span style="font-size:14px !important;padding-top:2px;">&nbsp;&nbsp;-&nbsp;{{newsObj.date}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-click="sources(companydetails['review_sources'])" ng-disabled="companydetails['Comapany_review'] == undefined">
+                <md-tab-label>
+                    Employer Rating
+                    <md-tooltip md-direction="top" ng-if="companydetails['Comapany_review'] == undefined">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body>
+                    <div layout="row" style="height: 100%;" flex layout-align="center center" ng-show="companydetails['Comapany_review'] == undefined">
+                        <div>No data available</div>
+                    </div>
+                    <div layout="column" flex style="height: 100%;margin: 0 10px; margin-top:20px;" ng-hide="companydetails['Comapany_review'] == undefined">
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b># of ratings by employees</b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].No_of_reviews}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Overall rating description by employees</b>
+                            </div>
+                            <div flex="30" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="30">{{companydetails['Comapany_review'].Rating_Description}}</div>
+                            </div>
+
+                        </div>
+                        <b style="color:#75b73e; margin-bottom:10px;">Rating by themes:</b>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Overall</b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].Overall}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Culture And Values</b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].Culture_and_values}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Senior Leadership </b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].Senior_Leadership}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Compensation And Benefits </b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].Compensation_and_benefits}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Career Opportunities </b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].Career_opportunities}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Work-life Balance </b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].WorkLife_balance}}</div>
+                            </div>
+                        </div>
+                        <div layout="row" class="info-row">
+                            <div>
+                                <b>Recommend To Friend </b>
+                            </div>
+                            <div flex="20" layout="row">
+                                <span>:&nbsp; </span>
+                                <div flex="10" style="text-align:right;">{{companydetails['Comapany_review'].Recommend_to_friend}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-click="sources1(companydetails2['Np_sources'])" ng-disabled="companydetails2['New-Product Launches'] == 'NA' || companydetails2['New-Product Launches'] == NA">
+                <md-tab-label>
+                    New Product/Services
+                    <md-tooltip md-direction="top" ng-if="companydetails2['New-Product Launches'] == 'NA' || companydetails2['New-Product Launches'] == NA">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="row" flex style="height: 100%;" layout-align="center center" ng-if="message == true">
+                        <span>Fetching Details</span>
+                    </div>
+                    <div layout="row" flex layout-align="center center" style="height: 100%;" ng-show="companydetails2['New-Product Launches'] == 'NA' || companydetails2['New-Product Launches'] == NA">
+                        <div>No data available</div>
+                    </div>
+                    <div ng-show="companydetails2 != null" layout="column" style="padding-left: 10px">
+
+                        <div layout="column" ng-hide="companydetails2['New-Product Launches'] == 'NA' || companydetails2['New-Product Launches'] == NA">
+                            <b>New Product/Services :</b>
+
+                            <div layout="column">
+                                <div layout="row" ng-repeat="REC1 in companydetails2['New-Product Launches']" class="ellipsis">
+                                    <span>-</span>
+                                    <a target="_blank" href="{{REC1['Link']}}">{{REC1['Title']}}</a>
+                                    <span style="font-size:14px !important; padding: 3px;">&nbsp;&nbsp;-&nbsp;{{REC1['date']}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-click="sources(companydetails['leadership_sources'])" ng-disabled="companydetails['current_team'] == undefined">
+                <md-tab-label>
+                    Leadership
+                    <md-tooltip md-direction="top" ng-if="companydetails['current_team'] == undefined">
+                        No data available
+                    </md-tooltip>
+                </md-tab-label>
+                <md-tab-body flex style="height: 100%;">
+                    <div layout="row" flex layout-align="center center" style="height: 100%;" ng-if="companydetails['current_team'] == undefined">
+                        <div>No data available</div>
+                    </div>
+                    <div ng-hide="companydetails['current_team'] == undefined" layout="column" style="padding-left: 10px">
+                        <div layout="row" layout-align="end end" style="padding: 10px 0;font-size:12px !important" ng-hide="companydetails['timestamp'] == '' || companydetails['timestamp'] == undefined">
+                            <span style="color: red">*&nbsp;</span>Data as of {{companydetails['timestamp']}}</div>
+
+                        <div style="text-align:center">
+                            <div flex layout="column" ng-repeat="details in companydetails['current_team']" style="display:inline-block; width:300px;min-width:300px; max-width:300px; min-height:200px;max-height:200px; height:200px; text-align:center; background-color:whitesmoke; padding:10px; margin:10px;">
+                                <div flex layout="row" layout-align="center center">
+                                    <img ng-src="{{details.photourl}}" class="leadershipimage" alt="No image" ng-if="details.photourl" ng-hide="data == 'No profiles found'">
+                                    <img src="https://career.utk.edu/wp-content/uploads/sites/56/2017/06/image_preview.jpg" class="shadow2" alt="No image" ng-if="!details.photourl">
+                                </div>
+                                <div flex layout="row" layout-align="center center">
+                                    <a target="_blank" href="{{details.profileurl}}"> {{details.Name}}</a>
+                                </div>
+                                <div flex layout="row" layout-align="center center">
+                                    <p style="color:grey;">{{details.Designation}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+
+        </md-tabs>
+    </md-content>
+    </div>
